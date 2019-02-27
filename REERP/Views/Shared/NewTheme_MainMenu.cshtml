@@ -1,0 +1,316 @@
+﻿@using REERP.Security;
+<style>
+    #reportMenuAnchor {
+        cursor: pointer;
+    }
+</style>
+@{ 
+    var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
+    if (user == null)
+    {
+        user = new MyIdentityUser()
+        {
+            FullName = "No User Found",
+        };
+    }
+}
+        
+<div class="page-header -i navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- add container here for boxed layout-->
+        <!-- BEGIN LOGO -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("REERP Stock System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN HORIZANTAL MENU -->
+        <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+        <!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) sidebar menu below. So the horizontal menu has 2 seperate versions -->
+    <div class="hor-menu hidden-sm hidden-xs">
+    <ul class="nav navbar-nav">
+            @*<li>
+                <a href="@Url.Action("Index","AdminDashboard")">Dashboard</a>
+            </li>*@
+
+        @if (user != null)
+        {
+            if (user.Role == "Administrator")
+            {
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Product Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Category", "Index", "Categories")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Product", "Index", "Productcs")</li>
+                    </ul>
+                </li>
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Stock Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Receive", "Index", "ProductReceives")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Transfer", "Index", "ProductTransfers")</li>
+                    </ul>
+                </li>
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Sales Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Customer", "Index", "Customers")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Sales", "Index", "SalesInvoices")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Sales Report", "SalesReport", "SalesInvoices")</li>
+                    </ul>
+                </li>
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Branches", "Index", "Branches")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Users", "Users", "Account")</li>
+                    </ul>
+                </li>
+            }
+            else if (user.Role == "StoreKeeper")
+            {
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Product Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Category", "Index", "Categories")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Product", "Index", "Productcs")</li>
+                    </ul>
+                </li>
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Stock Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Receive", "Index", "ProductReceives")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Transfer", "Index", "ProductTransfers")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("All Stock Report", "ReportStockAllBranch", "Stocks")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Branch Stock Report", "ReportStockByBranch", "Stocks")</li>
+                  
+                    </ul>
+                </li>
+            }
+            else if (user.Role == "SalesPerson")
+            {
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Sales Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Customer", "Index", "Customers")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Sales", "Index", "SalesInvoices")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Sales Report", "SalesReport", "SalesInvoices")</li>
+                    </ul>
+                </li>
+            }
+            else if (user.Role == "Cashier")
+            {
+                <li class="classic-menu-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Sales Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Sales", "Index", "SalesInvoices")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Sales Report", "SalesReport", "SalesInvoices")</li>
+                    </ul>
+                </li>
+            }
+        }
+        
+        </ul>
+    </div>
+        <!-- END HORIZANTAL MENU -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <li class="classic-menu-dropdown">                    
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@user.FullName<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Change Password", "ChangePassword", "Account")</li>
+                        <li class="classic-menu-dropdown">@Html.ActionLink("Modify Profile", "ChangeProfile", "Account")</li>
+                        <li class="classic-menu-dropdown">
+                            <form action="/account/logout" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="submit" class="btn red btn-sm" value="Logout" style="margin-top: 10px;width: 100%;" />
+                            </form>
+                        </li>   
+                    </ul>
+                </li>
+                @*<li class="classic-menu-dropdown">
+                    @Html.ActionLink("Change Password", "ChangePassword", "Account")
+                </li>
+                <li class="classic-menu-dropdown">
+                    @Html.ActionLink("Modify Profile", "ChangeProfile", "Account")
+                </li>
+                <li class="classic-menu-dropdown">
+                    <form action="/account/logout" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="submit" class="btn red btn-sm" value="Logout" style="margin-top: 10px"/>
+                    </form>
+                </li>*@                
+            </ul>
+        </div>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+<!-- END HEADER -->
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<!--/.nav-collapse -->
+
+
+<div id="changePasswordModal" class="modal fade" tabindex="-1" role="basic" aria-hidden="true">
+    @using (Html.BeginForm("ChangePasswordAjax", "Users", new { Area = "Settings" }, FormMethod.Post, new { @class = "modal-form", id = "changePassword" }))
+    {
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Change Password</h4>
+                    <h3></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="OldPassword">Old password:</label>
+                            <div class="col-md-4">
+                                <input class="form-control" type="password" id="OldPassword" name="OldPassword" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="NewPassword">New password:</label>
+                            <div class="col-md-4 ">
+                                <input class="form-control" type="password" id="NewPassword" name="NewPassword" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="ConfirmPassword">Retype password:</label>
+                            <div class="col-md-4">
+                                <input class="form-control" type="password" id="ConfirmPassword" name="ConfirmPassword" required="required" />
+                            </div>
+                        </div>
+
+                        <div id="divChangePasswordMessage">
+                            Message
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Change password</button>
+                    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $('#reportMenuAnchor').click(function () {
+        window.location = "@Url.Action("ReportListing", "Home", new { Area = "" })";
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        var allValidationRules = {
+            OldPassword: "required",
+            NewPassword: "required",
+            ConfirmPassword: "required"
+
+        };
+        $("#changePassword").validate({
+            rules: allValidationRules,
+            showErrors: function (element, errorClass, validClass) {
+                for (var i in errorClass) {
+                    //$(errorClass[i].element).popover('show');
+                }
+            }
+        });
+        $("#linkChangePassword").click(function () {
+            $("#OldPassword").val("");
+            $("#NewPassword").val("");
+            $("#ConfirmPassword").val("");
+            $("#divChangePasswordMessage").html("");
+
+        });
+
+        $("#changePassword").submit(function () {
+            var messages = [];
+            var is_valid = true;
+            var $form = $("#changePassword");
+
+            if (!$("#OldPassword").val()) {
+                messages.push("Please input your current password");
+                is_valid = false;
+            }
+            if ($("#NewPassword").val() != $("#ConfirmPassword").val()) {
+                messages.push("Non Matching Paswords");
+                is_valid = false;
+
+            }
+            var message = "";
+            for (var i in messages) {
+
+                message += "<div class='alert alert-error'>" + messages[i] + "</div>";
+
+
+            }
+            $("#divChangePasswordMessage").html(message);
+            //alert($form.attr("action"));
+            var formData = $form.serialize();
+            console.log(formData);
+            if (is_valid) {
+                $.post($form.attr("action"), formData, function (data) {
+                    var success = true;
+                    console.log(data);
+                    message = "";
+                    for (var i in data) {
+
+                        message += "<div class='alert alert-" + data[i].Key + "'>" + data[i].Value + "</div>";
+                        if (data[i].Key == "error") {
+                            success = false;
+                        }
+                    }
+                    $("#divChangePasswordMessage").html(message);
+                    if (success) {
+                        setTimeout(function () {
+                            $("#changePasswordModal").modal('hide');
+                            window.location = $("#linkLogout").attr("href");
+                        }, 1500);
+
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+
+<div id="changePasswordModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Confirm Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Body goes here...
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn default" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button data-dismiss="modal" class="btn blue">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

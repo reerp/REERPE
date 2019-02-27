@@ -1,0 +1,277 @@
+﻿@model REERP.Models.ViewModels.ProductTransferViewModel
+
+@{
+    ViewBag.Title = "Transfer product";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+<style type="text/css" class="init">
+    th {
+        white-space: nowrap;
+    }
+</style>
+<link href="~/Content/katniss-template/css/jquery-ui.min.css" rel="stylesheet" />
+@Styles.Render("~/Content/datatable")
+@Scripts.Render("~/bundles/datatable")
+<script src="/Content/katniss-template/js/jquery-ui.min.js"></script>
+
+<div class="card pd-10 pd-sm-20">
+    <div class="row">
+        <div class="col-sm-6 col-md-8">
+            <h6 class="card-body-title"></h6>
+        </div><!-- col-sm-6 -->
+        <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
+
+            <div class="actions">
+                <a class="btn btn-primary btn-block mg-b-10 btn-transfer" href="#" ><i class="fa fa-save"></i>  Save</a>
+            </div>
+
+        </div><!-- col-sm-3 -->
+        <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
+
+            <div class="actions">
+                <a class="btn btn-dark btn-block mg-b-10 btn-print" id="print" href="#"><i class="fa fa-print"></i>  Print</a>
+            </div>
+
+        </div><!-- col-sm-3 -->
+    </div>
+
+    <p></p>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken();
+
+        <div class="form-layout">
+            <div class="row mg-b-1">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, new { @class = "form-control-label" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.UserName), @readonly = "readonly", @Value = ViewBag.UserName })
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("From Branch", new {@class = "form-control-label"})
+                        @Html.DropDownListFor(m => m.FromBranchId, ViewBag.FromBranchList as SelectList,  new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("To Branch", new {@class = "form-control-label"})
+                        @Html.DropDownListFor(m => m.ToBranchId, ViewBag.ToBranchList as SelectList,  new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ToBranchName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div><!--row mg-b-1-->
+        </div><!--form-layout-->
+        <div class="form-layout">
+            <div class="row mg-b-1">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.Label("Product", new { @class = "form-control-label" })
+                        @* @Html.DropDownList("ProductId", (SelectList)ViewData["ProductList"], new { @class = "form-control" })*@
+                        <input type="text" id="txtProduct" name="Product" class="form-control" placeholder="Select Product" />
+                        <input type="hidden" id="hfCustomer" name="CustomerId" />
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Quantity", new { @class = "form-control-label" })
+                        <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity Here">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        @Html.Label("Unit Cost", new { @class = "form-control-label" })
+                        <input class="form-control valid" id="price" name="UnitCost" type="text" placeholder="Enter Unit Cost Here">
+
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+
+                        <label class="form-control-label"></label>
+                        <a id="addRow" class="btn btn-primary btn-block mg-b-10 mg-t-5 btn-add-item" href="#" ><i class="fa fa-plus"></i>  Add Item</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--form-layout-->
+    }
+</div>
+<div class="card pd-10 pd-sm-20">
+    <div class="table-wrapper">
+        <table id="datatable1" class="display">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Unit Cost</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3" style="text-align:right">Total:</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div><!--card pd-10 pd-sm-20 table-->
+
+<script>
+    $.fn.dataTable.Api.register('hasValue()', function (value) {
+        return this
+            .data()
+            .toArray()
+            .toString()
+            .toLowerCase()
+            .split(',')
+            .indexOf(value.toString().toLowerCase()) > -1
+    })
+    $(document).ready(function () {
+        var t = $('#datatable1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+
+                {
+                    extend: 'print',
+                    footer: true,
+                    messageTop: $('#head').html()
+                }
+            ],
+            "columnDefs": [ {
+                "targets": 3,
+                "orderable": false
+            } ],
+            bLengthChange: false,
+            searching: false,
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                    .column(3)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Total over this page
+                pageTotal = api
+                    .column(3, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(3).footer()).html(
+                    '$' + pageTotal + ' ( $' + total + ' total)'
+                );
+
+            }
+        });
+        var counter = 1;
+
+
+
+        $('#addRow').on('click', function () {
+            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") {
+                alert("Please add Item");
+                return;
+            }
+
+            var productName = $("#txtProduct").val(),
+                price = $("#price").val(),
+                quantity = $("#quantity").val(),
+                detailsTableBody = $("#datatable2 tbody");
+            // alert(t.hasValue(productName));
+            //alert(t.hasValue(productName));
+            if (t.hasValue(productName)) {
+                alert("Item Exsists");
+                clearItem();
+                return;
+            }
+            t.row.add([
+                productName,
+                quantity,
+                price,
+                (parseFloat(price) * parseInt(quantity)),
+                '<a data-itemId="0" href="#" class="deleteItem">Remove</a>'
+            ]).draw(false);
+            clearItem();
+        });
+
+        // Automatically add a first row of data
+        //$('#addRow').click();
+        //After Adding an item In The List, Clear Clean The Form For to Add More.
+        function clearItem() {
+            //$("#productName").val('');
+            $("#txtProduct").val('');
+            $("#price").val('');
+            $("#quantity").val('');
+        }
+        // After Add an item In The List, If You Want, You Can Remove It.
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+
+                $(this).parents('tr').css("background-color", "#F30808").fadeOut(900, function () {
+
+                    t.row(this).remove().draw(false);
+                });
+            }
+        });
+
+    });
+    $(function () {
+        $("#txtProduct").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/ProductReceives/AutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#hfCustomer").val(i.item.val);
+            },
+            minLength: 0
+        }).focus(function () {
+            $(this).autocomplete("search");
+        });
+    });
+    $("#print").click(function () {
+        print()
+    });
+</script>
+
+
+
+
+
+

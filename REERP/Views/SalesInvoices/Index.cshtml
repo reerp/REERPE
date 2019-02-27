@@ -1,0 +1,271 @@
+﻿@model IEnumerable<REERP.Models.ViewModels.SalesInvoiceViewModel>
+@using REERP.Security;
+@{
+    ViewBag.Title = "Sales Invoices";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+    var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
+}
+
+@Styles.Render("~/Content/datatable")
+<div class="card pd-20 pd-sm-40">
+    <div class="row">
+
+        <div class="col-md-12  col-sm-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+
+                    <div class="tools">
+                        <a href="#" class="collapse" data-original-title="" title=""></a>
+                    </div>
+                    <div class="actions">
+                        @if (user.Role == "Administrator" || user.Role == "SalesPerson")
+                    {
+                    <a href="@Url.Action("Create", "SalesInvoices", new { salesType = 0 })" class="btn green" btn-success=""
+                       data-buttontype="btn_new_record"><i class="fa fa-plus"></i>Order Credit Sales</a>
+                    <a href="@Url.Action("Create", "SalesInvoices", new { salesType = 1 })" class="btn green" btn-success=""
+                       data-buttontype="btn_new_record"><i class="fa fa-plus"></i>Order Cash Sales</a>
+
+                    <a class="btn red btn-sm btn-return-sales-invoice" href="#"><span class="fa fa-minus-circle"></span>Return Sales</a>
+                    }
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <div class="table-responsive" style="overflow:visible !important;">
+                        <table id="datatable1" class="table display responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ReferenceNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CustomerName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BranchName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SalesType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DateSold)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Status)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (REERP.Models.ViewModels.SalesInvoiceViewModel item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReferenceNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CustomerName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BranchName)
+                                </td>
+                                <td>
+                                    @if (item.SalesType == 0)
+                                        {
+                                        <div>Credit</div>
+                                        }
+                                        else
+                                        {
+                                        <div>Cash</div>
+                                        }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateSold)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        @if (item.Status == "Draft")
+                                            {
+                                            <a class="btn yellow btn-sm" href="@Url.Action("Create", "SalesInvoices", new { id = item.SalesInvoiceId })"><span class="fa fa-edit"></span>Edit</a>
+                                            <a class="btn red btn-sm btn-delete-sales-invoice" href="#" salesInvoiceId="@item.SalesInvoiceId"><span class="fa fa-times-circle"></span>Delete</a>
+                                            <a class="btn purple btn-sm" href="@Url.Action("Proforma", "SalesInvoices", new { id = item.SalesInvoiceId })"><span class="fa fa-edit"></span>Pro-Forma</a>
+                                            }
+                                            else if (item.Status == "Paid")
+                                            {
+                                            <a class="btn purple btn-sm" href="@Url.Action("SalesAttachment", "SalesInvoices", new { id = item.SalesInvoiceId })"><span class="fa fa-edit"></span>Attachment</a>
+                                            }
+                                            else if (item.Status == "Checkedout")
+                                            {
+                                            <a class="btn blue btn-sm btn-paid-sales-invoice" href="#" salesInvoiceId="@item.SalesInvoiceId"><span class="fa fa-edit"></span>Paid</a>
+                                            <a class="btn red btn-sm btn-delete-sales-invoice" href="#" salesInvoiceId="@item.SalesInvoiceId"><span class="fa fa-times-circle"></span>Delete</a>
+                                            }
+                                            else
+                                            {
+                                            <a class="btn red btn-sm btn-delete-sales-invoice" href="#" salesInvoiceId="@item.SalesInvoiceId"><span class="fa fa-times-circle"></span>Delete</a>
+                                            }
+
+                                    </div>
+                                </td>
+                            </tr>
+                                //}
+
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal" id="cats-modal-sales-invoice-delete">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 id="myModalLabel" class="modal-title">Delete Sales Invoice</h4>
+                </div>
+
+
+                <div class="modal-body">
+
+                    <p>
+                        Are you sure do you want to delete the Sales Invoice?
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="yes-delete" class="btn btn-primary" type="submit">Yes</button>
+                    <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="cats-modal-sales-invoice-return">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                @using (Html.BeginForm("Return", "SalesInvoices", FormMethod.Post, new { id = "frm_return_sales_invoice", @class = "form-horizontal" }))
+            {
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 id="myModalLabel" class="modal-title">Return Sales Invoice</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="portlet-body row">
+
+                    @Html.AntiForgeryToken();
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="col-md-offset-1 col-md-6">
+                        <div class="form-group">
+                            <div class="pull-left">Sales Invoice</div>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("SalesInvoiceId", (SelectList)ViewData["SalesList"])
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="yes-return" class="btn btn-primary" type="submit">Return</button>
+                <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            </div>
+            }
+                @ViewBag.Message
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="cats-modal-sales-invoice-paid">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 id="myModalLabel" class="modal-title">Paid Sales Invoice</h4>
+                </div>
+
+
+                <div class="modal-body">
+
+                    <p>
+                        Are you sure do you want to promote the Sales Invoice to Paid?
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="yes-paid" class="btn btn-primary" type="submit">Yes</button>
+                    <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/datatable")
+}
+    <script>
+        $(function () {
+            $("#datatable1").DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+            // Select2
+            $(".dataTables_length select").select2({ minimumResultsForSearch: Infinity });
+        $(".btn-delete-sales-invoice").click(function () {
+            var salesInvoiceId = $(this).attr('salesInvoiceId');
+            $('#cats-modal-sales-invoice-delete').modal('show');
+
+            $("#yes-delete").click(function () {
+
+                window.location = "@Url.Action("Delete", "SalesInvoices")" + "/" + salesInvoiceId;
+
+            });
+        });
+
+        $(".btn-paid-sales-invoice").click(function () {
+            var salesInvoiceId = $(this).attr('salesInvoiceId');
+            $('#cats-modal-sales-invoice-paid').modal('show');
+
+            $("#yes-paid").click(function () {
+
+                window.location = "@Url.Action("Paid", "SalesInvoices")" + "/" + salesInvoiceId;
+
+            });
+        });
+        $(".btn-return-sales-invoice").click(function () {
+            $('#cats-modal-sales-invoice-return').modal('show');
+
+            $("#yes-return").click(function () {
+
+                window.location = "@Url.Action("Return", "SalesInvoices")";
+
+            });
+        });
+    });
+    </script>

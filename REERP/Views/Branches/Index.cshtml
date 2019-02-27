@@ -1,0 +1,112 @@
+﻿@model IEnumerable<REERP.Models.Branch>
+@using REERP.Security;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+    var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
+}
+@Styles.Render("~/Content/datatable")
+<div class="card pd-20 pd-sm-40">
+
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BranchName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BranchLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BranchDescription)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchDescription)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.BranchId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.BranchId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.BranchId })
+                        <td>*@
+                        <div class="btn-group">
+                            <a class="btn yellow btn-sm" href="@Url.Action("Edit", "Branches", new { id = item.BranchId })"><span class="fa fa-edit"></span>Edit</a>
+                                
+                            <a class="btn red btn-sm btn-delete-branch" href="#" branchId="@item.BranchId"><span class="fa fa-times-circle"></span>Delete</a>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+            <tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="cats-modal-branch-delete">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 id="myModalLabel" class="modal-title">Delete Branch</h4>
+            </div>
+            <div class="modal-body">
+
+                <p>
+                    Are you sure do you want to delete the Branch?
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button id="yes-delete" class="btn btn-primary" type="submit">Yes</button>
+                <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/datatable")
+}
+<script>
+    $(function () {
+        $(".btn-delete-branch").click(function () {
+            var branchId = $(this).attr('branchId');
+            $('#cats-modal-branch-delete').modal('show');
+
+            $("#yes-delete").click(function () {
+
+                window.location = "@Url.Action("Delete", "Branches")" + "/" + branchId;
+
+            });
+        });
+        $("#datatable1").DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+        // Select2
+        $(".dataTables_length select").select2({ minimumResultsForSearch: Infinity });
+    });
+</script>

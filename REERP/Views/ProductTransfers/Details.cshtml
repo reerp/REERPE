@@ -1,0 +1,83 @@
+﻿@model REERP.Models.ViewModels.ProductTransferViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/NewTheme _MainLayout_Sidebar.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProductTransferViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductTransferId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductTransferId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTransfered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTransfered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromBranchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromBranchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromBranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromBranchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToBranchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToBranchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToBranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToBranchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

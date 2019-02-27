@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP", "REERP\REERP.csproj", "{1D1D6805-1728-437E-BCDB-C9C25C4E4F9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{C98E0ECA-D5A4-46B0-AD98-1BD7CA8F2074}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureVMPublishModule.psm1 = PublishScripts\AzureVMPublishModule.psm1
+		PublishScripts\Publish-WebApplicationVM.ps1 = PublishScripts\Publish-WebApplicationVM.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{85A6391E-3DF2-4415-93D1-F36601E3000E}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\MoencoPOS-VM-dev.json = PublishScripts\Configurations\MoencoPOS-VM-dev.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{FD6A09C0-386D-425A-9E57-A823501EBBCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP.Models", "REERP.Models\REERP.Models.csproj", "{12C866FD-7E2A-41E0-8D1E-856E2C847702}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{13ABDA03-109E-4763-ADBB-1028D5A303AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{2B14CBF7-C005-4DAF-8D5B-21F5D5032635}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7DFD392F-0E4B-4172-885A-59FF11F8479D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP.Tests", "REERP.Tests\REERP.Tests.csproj", "{637B03EA-B7C5-4463-B051-D316AB6B805B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP.Product.Services", "REERP.Product.Services\REERP.Product.Services.csproj", "{C6FCB914-1C3F-4BA6-9DC6-37B68B221543}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP.Sales.Services", "REERP.Sales.Services\REERP.Sales.Services.csproj", "{14A2C9F7-4B0F-4C38-8D54-7440CD081872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP.Store.Services", "REERP.Store.Services\REERP.Store.Services.csproj", "{7001FEAF-2904-471B-9C11-2F7E160D8DDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REERP.DAL", "REERP.DAL\REERP.DAL.csproj", "{9621E6A5-68DD-45CB-9978-0945EDCE09F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D1D6805-1728-437E-BCDB-C9C25C4E4F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D1D6805-1728-437E-BCDB-C9C25C4E4F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D1D6805-1728-437E-BCDB-C9C25C4E4F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D1D6805-1728-437E-BCDB-C9C25C4E4F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12C866FD-7E2A-41E0-8D1E-856E2C847702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C866FD-7E2A-41E0-8D1E-856E2C847702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12C866FD-7E2A-41E0-8D1E-856E2C847702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12C866FD-7E2A-41E0-8D1E-856E2C847702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637B03EA-B7C5-4463-B051-D316AB6B805B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637B03EA-B7C5-4463-B051-D316AB6B805B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637B03EA-B7C5-4463-B051-D316AB6B805B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637B03EA-B7C5-4463-B051-D316AB6B805B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6FCB914-1C3F-4BA6-9DC6-37B68B221543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FCB914-1C3F-4BA6-9DC6-37B68B221543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FCB914-1C3F-4BA6-9DC6-37B68B221543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FCB914-1C3F-4BA6-9DC6-37B68B221543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14A2C9F7-4B0F-4C38-8D54-7440CD081872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A2C9F7-4B0F-4C38-8D54-7440CD081872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14A2C9F7-4B0F-4C38-8D54-7440CD081872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A2C9F7-4B0F-4C38-8D54-7440CD081872}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7001FEAF-2904-471B-9C11-2F7E160D8DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7001FEAF-2904-471B-9C11-2F7E160D8DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7001FEAF-2904-471B-9C11-2F7E160D8DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7001FEAF-2904-471B-9C11-2F7E160D8DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9621E6A5-68DD-45CB-9978-0945EDCE09F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9621E6A5-68DD-45CB-9978-0945EDCE09F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9621E6A5-68DD-45CB-9978-0945EDCE09F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9621E6A5-68DD-45CB-9978-0945EDCE09F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{85A6391E-3DF2-4415-93D1-F36601E3000E} = {C98E0ECA-D5A4-46B0-AD98-1BD7CA8F2074}
+		{12C866FD-7E2A-41E0-8D1E-856E2C847702} = {FD6A09C0-386D-425A-9E57-A823501EBBCF}
+		{637B03EA-B7C5-4463-B051-D316AB6B805B} = {7DFD392F-0E4B-4172-885A-59FF11F8479D}
+		{C6FCB914-1C3F-4BA6-9DC6-37B68B221543} = {2B14CBF7-C005-4DAF-8D5B-21F5D5032635}
+		{14A2C9F7-4B0F-4C38-8D54-7440CD081872} = {2B14CBF7-C005-4DAF-8D5B-21F5D5032635}
+		{7001FEAF-2904-471B-9C11-2F7E160D8DDA} = {2B14CBF7-C005-4DAF-8D5B-21F5D5032635}
+		{9621E6A5-68DD-45CB-9978-0945EDCE09F8} = {13ABDA03-109E-4763-ADBB-1028D5A303AB}
+	EndGlobalSection
+EndGlobal

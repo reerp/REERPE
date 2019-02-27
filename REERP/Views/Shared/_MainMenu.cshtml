@@ -1,0 +1,196 @@
+﻿
+
+<style>
+    #reportMenuAnchor {
+        cursor: pointer;
+    }
+</style>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+
+            <a class="brand" href="~/">REERP Stock System</a>
+            <div class="nav-collapse collapse">
+
+                <div>
+                    <ul class="nav">
+                        @*<li>
+                                <a href="@Url.Action("Index","AdminDashboard")">Dashboard</a>
+                            </li>*@
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Product Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">                                
+                                <li>@Html.ActionLink("Category", "Index", "Categories")</li>
+                                <li>@Html.ActionLink("Product", "Index", "Products")</li>    
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Stock Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Url.Action("Index", "Language", new { Area = "Localization" })
+                                </li>
+                                <li>
+                                    @Url.Action("Index", "Translation", new { Area = "Localization" })
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Sales Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Sales", "Index", "SalesInvoices")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Add User", "AddUser", "Home")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+
+                </div>
+                <ul class="nav pull-right">
+                    <li>@Html.Partial("_LoginPartial")</li>
+                    <li class="divider-vertical"></li>
+
+                    <li class="dropdown">
+
+                    </li>
+                    <li class="dropdown">
+
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<div id="changePasswordModal" class="modal hide" style="display: none; ">
+    @using (Html.BeginForm("ChangePasswordAjax", "Users", new { Area = "Settings" }, FormMethod.Post, new { @class = "modal-form", id = "changePassword" }))
+    {
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Change Password</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <div class="control-label">
+                        <label for="OldPassword">Old password:</label>
+                    </div>
+                    <div class="controls">
+                        <input type="password" id="OldPassword" name="OldPassword" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <label for="NewPassword">New password:</label>
+                    </div>
+                    <div class="controls">
+                        <input type="password" id="NewPassword" name="NewPassword" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <label for="ConfirmPassword">Retype password:</label>
+                    </div>
+                    <div class="controls">
+                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" required="required" />
+                    </div>
+                </div>
+            </div>
+            <div id="divChangePasswordMessage">
+                Message
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Change password</button>
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    }
+</div>
+<script>
+    $('#reportMenuAnchor').click(function () {
+        window.location = "@Url.Action("ReportListing","Home",new {Area=""})";
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        var allValidationRules = {
+            OldPassword: "required",
+            NewPassword: "required",
+            ConfirmPassword: "required"
+
+        };
+        $("#changePassword").validate({
+            rules: allValidationRules,
+            showErrors: function (element, errorClass, validClass) {
+                for (var i in errorClass) {
+                    //$(errorClass[i].element).popover('show');
+                }
+            }
+        });
+        $("#linkChangePassword").click(function () {
+            $("#OldPassword").val("");
+            $("#NewPassword").val("");
+            $("#ConfirmPassword").val("");
+            $("#divChangePasswordMessage").html("");
+
+        });
+
+        $("#changePassword").submit(function ()
+        {
+            var messages = [];
+            var is_valid = true;
+            var $form=$("#changePassword");
+
+            if (!$("#OldPassword").val()) {
+                messages.push("Please input your current password");
+                is_valid = false;
+            }
+            if ($("#NewPassword").val() != $("#ConfirmPassword").val()) {
+                messages.push("Non Matching Paswords");
+                is_valid = false;
+
+            }
+            var message = "";
+            for (var i in messages) {
+
+                message += "<div class='alert alert-error'>" + messages[i] + "</div>";
+
+
+            }
+            $("#divChangePasswordMessage").html(message);
+            //alert($form.attr("action"));
+            var formData = $form.serialize();
+            console.log(formData);
+            if (is_valid) {
+                $.post($form.attr("action"), formData, function (data) {
+                    var success = true;
+                    console.log(data);
+                    message = "";
+                    for (var i in data) {
+
+                        message += "<div class='alert alert-" + data[i].Key + "'>" + data[i].Value + "</div>";
+                        if (data[i].Key == "error") {
+                            success = false;
+                        }
+                    }
+                    $("#divChangePasswordMessage").html(message);
+                    if (success) {
+                        setTimeout(function () {
+                            $("#changePasswordModal").modal('hide');
+                            window.location=$("#linkLogout").attr("href");
+                        }, 1500);
+
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>

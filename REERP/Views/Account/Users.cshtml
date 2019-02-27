@@ -1,0 +1,111 @@
+﻿@using REERP.Models
+
+@model IEnumerable<Register>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+<div class="card pd-20 pd-sm-40">
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Birth Date</th>
+                <th>Bio</th>
+                <th>Branch</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (Register item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.BirthDate
+                    </td>
+                    <td>
+                        @item.Bio
+                    </td>
+                    <td>
+                        @item.BranchName
+                    </td>
+                    <td>
+                        @item.Role
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn yellow btn-sm" href="@Url.Action("EditUser", "Account")/@item.Id"><span class="fa fa-edit"></span>Edit</a>
+                            <a class="btn red btn-sm btn-delete-user" href="#" userId="@item.Id"><span class="fa fa-times-circle"></span>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="cats-modal-user-delete">
+    <div class="modal-dialog modal-dialog-vertical-center">
+        <div class="modal-content bd-0 tx-14">
+            <div class="modal-header pd-y-20 pd-x-25">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Delete User</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pd-25">
+                <h5 class="lh-3 mg-b-20"><a href="" class=" hover-primary tx-danger"> Are you sure do you want to delete the User?</a></h5>
+                @*<p class="mg-b-5">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>*@
+            </div>
+            <div class="modal-footer">
+                <button id="yes-delete" class="btn btn-default pd-x-20" type="submit">Yes</button>
+                <button id="no" class="btn btn-secondary pd-x-20" data-dismiss="modal" aria-hidden="true">No</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/datatable")
+}
+<script>
+    $(function () {
+        $(".btn-delete-user").click(function () {
+            var userId = $(this).attr('userId');
+            $('#cats-modal-user-delete').modal('show');
+
+            $("#yes-delete").click(function () {
+
+                window.location = "@Url.Action("DeleteUser", "Account")" + "/" + userId;
+
+            });
+        });
+        $("#datatable1").DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+        // Select2
+        $(".dataTables_length select").select2({ minimumResultsForSearch: Infinity });
+    });
+</script>

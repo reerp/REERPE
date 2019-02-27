@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   
+
+    <!-- Meta -->
+    <meta name="description" content="REERP Stock System">
+    <meta name="author" content="Temesgen Sisay & Endale Ermias">
+
+
+    <title>REERP Stock System</title>
+
+    <!-- vendor css -->
+    @Styles.Render("~/Content/K-css")
+    @Scripts.Render("~/bundles/K-jquery")
+   
+    
+   
+    
+</head>
+
+<body>
+<!-- ##### SIDEBAR LOGO ##### -->
+<div class="kt-sideleft-header">
+    <div class="kt-logo"><a href="index.html">Rango</a></div>
+    <div id="ktDate" class="kt-date-today"></div>
+    <div class="input-group kt-input-search">
+        <input type="text" class="form-control" placeholder="Search...">
+        <span class="input-group-btn mg-0">
+            <button class="btn"><i class="fa fa-search"></i></button>
+        </span>
+    </div><!-- input-group -->
+</div><!-- kt-sideleft-header -->
+<!-- ##### SIDEBAR MENU ##### -->
+<div class="kt-sideleft">
+    <label class="kt-sidebar-label">Navigation</label>
+    <ul class="nav kt-sideleft-menu">
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="icon ion-ios-home-outline"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-person-stalker"></i>
+                <span>Customers</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="/Customers" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/Customers/Create" class="nav-link">Register</a></li>
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-cash"></i>
+                <span>Sales</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="/SalesInvoices" class="nav-link">Sales</a></li>
+                <li class="nav-item"><a href="/SalesInvoices/Create" class="nav-link">Cash Sales</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Credit Sales</a></li>
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-cube"></i>
+                <span>Products</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="/Categories/Create" class="nav-link">Add Category</a></li>
+                <li class="nav-item"><a href="/Productcs/Create" class="nav-link">Add Item</a></li>
+               
+                <li class="nav-item"><a href="/ProductReceives" class="nav-link">Received Products</a></li>
+                <li class="nav-item"><a href="/ProductReceives/Create" class="nav-link">Receive Products</a></li>
+                
+                <li class="nav-item"><a href="ProductTransfers" class="nav-link">Transfered Products</a></li>
+                <li class="nav-item"><a href="ProductTransfers/Create" class="nav-link">Transfer Products</a></li>
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-archive"></i>
+                <span>Stock</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="map-google.html" class="nav-link">Recieve Products</a></li>
+                <li class="nav-item"><a href="map-vector.html" class="nav-link">Transfer Products</a></li>
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-stats-bars"></i>
+                <span>Reports</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="table-basic.html" class="nav-link">Sales</a></li>
+            </ul>
+        </li><!-- nav-item -->
+
+    </ul>
+</div><!-- kt-sideleft -->
+<!-- ##### HEAD PANEL ##### -->
+<div class="kt-headpanel">
+    <div class="kt-headpanel-left">
+        <a id="naviconMenu" href="" class="kt-navicon d-none d-lg-flex"><i class="icon ion-navicon-round"></i></a>
+        <a id="naviconMenuMobile" href="" class="kt-navicon d-lg-none"><i class="icon ion-navicon-round"></i></a>
+    </div><!-- kt-headpanel-left -->
+
+    <div class="kt-headpanel-right">
+
+        <div class="dropdown dropdown-profile">
+            <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
+                <img src="../img/img3.jpg" class="wd-32 rounded-circle" alt="">
+                <span class="logged-name"><span class="hidden-xs-down">Jane Doe</span> <i class="fa fa-angle-down mg-l-3"></i></span>
+            </a>
+            <div class="dropdown-menu wd-200">
+                <ul class="list-unstyled user-profile-nav">
+                    <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
+                    <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
+                    <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
+                    <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
+                    <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
+                    <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
+                </ul>
+            </div><!-- dropdown-menu -->
+        </div><!-- dropdown -->
+    </div><!-- kt-headpanel-right -->
+</div><!-- kt-headpanel -->
+<div class="kt-breadcrumb">
+    <!--
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="index.html">Katniss</a>
+        <span class="breadcrumb-item active">Blank</span>
+    </nav>
+    -->
+</div><!-- kt-breadcrumb -->
+<!-- ##### MAIN PANEL ##### -->
+<div class="kt-mainpanel">
+    <div class="kt-pagetitle">
+        <h4>@ViewBag.Title</h4>
+    </div><!-- kt-pagetitle -->
+    <div class="kt-pagebody">
+        <!-- your content goes here -->
+        @RenderBody()
+    </div><!-- kt-pagebody -->
+    <!--
+    <div class="kt-footer">
+        <span>Copyright &copy;. All Rights Reserved. Katniss Responsive Bootstrap 4 Admin Dashboard.</span>
+        <span>Created by: ThemePixels, Inc.</span>
+    </div>
+    -->
+    <!-- kt-footer -->
+</div><!-- kt-mainpanel -->
+    
+@RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,92 @@
+﻿@model REERP.Models.Customer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+<div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title">Add Customer</h6>
+    @using (Html.BeginForm("Create", "Customers", FormMethod.Post, new { id = "frm_create_customer", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken();
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-layout">
+            <div class="row mg-b-25">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MiddleName, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-lg-8">
+                    <div class="form-group mg-b-10-force">
+                        @Html.LabelFor(m => m.Address, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+
+                    </div>
+                </div><!-- col-8 -->
+                <div class="col-lg-4">
+                    <div class="form-group mg-b-10-force">
+                        @Html.LabelFor(m => m.TelephoneNo, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.TelephoneNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TelephoneNo, "", new { @class = "text-danger" })
+
+
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TIN, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.TIN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TIN, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.VATNumber, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.TextBoxFor(m => m.VATNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.VATNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- col-4 -->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Trusted, new { @class = "form-control-label" })<span class="tx-danger">*</span>
+                        @Html.EditorFor(model => model.Trusted, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Trusted, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- col-4 -->
+            </div><!-- row -->
+
+            <div class="form-layout-footer">
+                @*<a class="btn green btn-sm" data-buttontype="btn_save" onclick="javascript: document.getElementById('frm_create_customer').submit()" data-submittedform="frm_create_customer"><span class="fa fa-save"></span> Save</a>*@
+                
+                <button class="btn btn-default mg-r-5" onclick="javascript: document.getElementById('frm_create_customer').submit()" data-submittedform="frm_create_customer"><span class="fa fa-save"></span> Submit Form</button>
+                <a class="btn btn-secondary" href="@Url.Action("Index", "Customers")"><span class="fa fa-times-circle"></span> Cancel</a>
+
+            </div><!-- form-layout-footer -->
+        </div><!-- form-layout -->
+
+    }
+    @ViewBag.Message
+</div><!-- card -->

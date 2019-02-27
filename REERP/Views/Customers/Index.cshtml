@@ -1,0 +1,143 @@
+﻿@model IEnumerable<REERP.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+
+}
+@Styles.Render("~/Content/datatable")
+
+<div class="card pd-20 pd-sm-40">
+   
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MiddleName)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TelephoneNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TIN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VATNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trusted)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (REERP.Models.Customer item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.MiddleName)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TelephoneNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VATNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Trusted)
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn yellow btn-sm" href="@Url.Action("Edit", "Customers", new { id = item.CustomerId })"><span class="fa fa-edit"></span>Edit</a>
+                            <a class="btn red btn-sm btn-delete-customer"  href="#" customerId="@item.CustomerId"><span class="fa fa-times-circle"></span>Delete</a>
+                            
+                        </div>
+                    </td>
+                </tr>
+
+
+            }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="modal" id="cats-modal-customer-delete">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 id="myModalLabel" class="modal-title">Delete Customer</h4>
+            </div>
+
+
+            <div class="modal-body">
+
+                <p>
+                    Are you sure do you want to delete the Customer?
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button id="yes-delete" class="btn btn-primary" type="submit">Yes</button>
+                <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/datatable")
+}
+<script type="text/javascript">
+    $(function () {
+            
+        $("#datatable1").DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+        // Select2
+        $(".dataTables_length select").select2({ minimumResultsForSearch: Infinity });
+        $(".btn-delete-customer").click(function () {
+            var customerId = $(this).attr('customerId');
+            $('#cats-modal-customer-delete').modal('show');
+
+            $("#yes-delete").click(function () {
+
+                window.location = "@Url.Action("Delete", "Customers")" + "/" + customerId;
+
+            });
+        });
+    });
+</script>

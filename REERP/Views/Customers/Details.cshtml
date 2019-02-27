@@ -1,0 +1,83 @@
+﻿@model REERP.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/NewTheme _MainLayout_Sidebar.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelephoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelephoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VATNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VATNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trusted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trusted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

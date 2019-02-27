@@ -1,0 +1,44 @@
+﻿@model REERP.Models.Branch
+@using REERP.Security;
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/NewTheme _MainLayout_Sidebar.cshtml";
+    var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
+}
+
+<h2>Branch Details</h2>
+
+<div>
+    <h4>Branch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BranchId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

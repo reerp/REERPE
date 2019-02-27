@@ -1,0 +1,131 @@
+﻿@model IEnumerable<REERP.Models.ViewModels.ProductTransferViewModel>
+
+@{
+    ViewBag.Title = "Transfered Products";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+
+<div class="card pd-20 pd-sm-40">
+    
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+
+                    <div class="tools">
+                        <a href="#" class="collapse" data-original-title="" title=""></a>
+                    </div>
+                    <div class="actions">
+                        <a href="@Url.Action("Create", "ProductTransfers")" class="btn green" btn-success=""
+                           data-buttontype="btn_new_record"><i class="fa fa-plus"></i>Transfer Product</a>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <div class="table-responsive" style="overflow:visible !important;">
+
+                        <table id="datatable1" class="table display responsive nowrap" style="width: 98%;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DateTransfered)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.FromBranchName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ToBranchName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DateTransfered)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FromBranchName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ToBranchName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn yellow btn-sm" href="@Url.Action("Create", "ProductTransfers", new { id = item.ProductTransferId })"><span class="fa fa-edit"></span>Edit</a>
+                                                <a class="btn red btn-sm btn-delete-product-transfer" href="#" productTransferId="@item.ProductTransferId"><span class="fa fa-times-circle"></span>Delete</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+       
+
+</div>
+<div class="modal" id="cats-modal-product-transfer-delete">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 id="myModalLabel" class="modal-title">Delete Product Transfer</h4>
+                </div>
+
+
+                <div class="modal-body">
+
+                    <p>
+                        Are you sure do you want to delete the Product Transfer?
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="yes-delete" class="btn btn-primary" type="submit">Yes</button>
+                    <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    @section scripts{
+        @Scripts.Render("~/bundles/datatable")
+    }
+    <script>
+        $(function () {
+            $("#datatable1").DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+            // Select2
+            $(".dataTables_length select").select2({ minimumResultsForSearch: Infinity });
+            $(".btn-delete-product-transfer").click(function () {
+                var productTransferId = $(this).attr('productTransferId');
+                $('#cats-modal-product-transfer-delete').modal('show');
+
+                $("#yes-delete").click(function () {
+
+                    window.location = "@Url.Action("DeleteTransfer", "ProductTransfers")" + "/" + productTransferId;
+
+                });
+            });
+        });
+    </script>

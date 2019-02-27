@@ -1,0 +1,88 @@
+﻿@model REERP.Models.ViewModels.SalesInvoiceViewModel
+@{
+    ViewBag.Title = "Proforma";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+<link href="~/Content/style.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/example.js"></script>
+<div id="">
+
+    <textarea id="header" style="height:30px !important">Proforma</textarea>
+    <div class="actions">
+        <button class="btn btn-sm pull-right btn-default" id="print">Print</button>
+    </div>
+    <div id="identity">
+
+        <textarea id="address">
+            REERP
+            Addis Ababa, Ethipia
+
+            Phone: (251) 116-18-5555
+        </textarea>
+
+    </div>
+
+    <div style="clear:both"></div>
+
+    <div id="customer">
+
+        <textarea id="customer-title">
+            @Model.CustomerName
+        </textarea>
+
+        <table id="meta">
+            <tbody>
+                <tr>
+                    <td class="meta-head">Invoice #</td>
+                    <td><textarea>@Model.ReferenceNo</textarea></td>
+                </tr>
+                <tr>
+
+                    <td class="meta-head">Date</td>
+                    <td><textarea id="date">@Model.DateSold</textarea></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Amount Due</td>
+                    <td><div class="due">@ViewBag.GrandTotal</div></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <table id="items">
+
+        <tbody>
+            <tr>
+                <th>Item</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+
+            @foreach (REERP.Models.ViewModels.SalesInvoiceLineItemViewModel item in ViewBag.SalesLineItemViewModels)
+            {
+                <tr class="item-row">
+                    <td class="item-name">@Html.DisplayFor(modelItem => item.Productname)</td>
+                    <td><textarea class="cost">@Html.DisplayFor(modelItem => item.UnitPrice)</textarea></td>
+                    <td><textarea class="qty">@Html.DisplayFor(modelItem => item.Quantity)</textarea></td>
+                    <td><span class="price">@Html.DisplayFor(modelItem => item.TotalPrice)</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="terms">
+        <h5>Terms</h5>
+        <textarea>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</textarea>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $("#print").click(function () {
+        print()
+    });
+</script>

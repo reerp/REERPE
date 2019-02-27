@@ -1,0 +1,89 @@
+﻿@using REERP.Security
+@model MyIdentityUser
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+<link href="~/Content/katniss-template/css/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Content/katniss-template/js/jquery-ui.min.js"></script>
+<div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title">Edit User</h6>
+    <p></p>
+    @using (Html.BeginForm("EditUser", "Account", FormMethod.Post, new { id = "frm_edit_user", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken();
+        @Html.HiddenFor(model => model.Id)
+        @Html.ValidationSummary()
+        <div class="form-layout">
+            <div class="row mg-b-25">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FullName, new { @class = "form-control-label" })
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                    </div><!--form-group-->
+                </div><!--ol-lg-4-->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, new { @class = "form-control-label" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    </div><!--form-group-->
+                </div><!--ol-lg-4-->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "form-control-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div><!--form-group-->
+                </div><!--ol-lg-4-->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BirthDate, new { @class = "form-control-label" })
+                        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control fc-datepicker" })
+                    </div><!--form-group-->
+                </div><!--ol-lg-4-->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BranchId, new { @class = "form-control-label" })
+                        @Html.DropDownList("BranchList",null ,new { @class = "form-control" })
+                       
+                    </div><!--form-group-->
+                </div><!--ol-lg-4-->
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Role, new { @class = "form-control-label" })
+                        @Html.DropDownList("RoleList", null, new { @class = "form-control" })
+                    </div><!--form-group-->
+                </div><!--ol-lg-4-->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Bio, new { @class = "form-control-label" })
+                        @Html.TextAreaFor(m => m.Bio, new { @class = "form-control" })
+                    </div><!--form-group-->
+                </div><!--ol-lg-12-->
+            </div><!--row mg-b-25-->
+            <div class="form-layout-footer">
+                @*<a class="btn green btn-sm" data-buttontype="btn_save" onclick="javascript: document.getElementById('frm_edit_user').submit()" data-submittedform="frm_edit_user"><span class="fa fa-save"></span> Save</a>
+                    <a class="btn red btn-sm" href="@Url.Action("Users", "Account")"><span class="fa fa-times-circle"></span> Cancel</a>*@
+                <button class="btn btn-default mg-r-5" onclick="javascript: document.getElementById('frm_edit_user').submit()" data-submittedform="frm_edit_user"><span class="fa fa-save"></span> Submit Form</button>
+                <a class="btn btn-secondary" href="@Url.Action("Users", "Account")"><span class="fa fa-times-circle"></span> Cancel</a>
+            </div><!-- form-layout-footer -->
+        </div><!--form-layout-->
+    }
+    @ViewBag.Message
+</div>
+<script>
+    $(function(){
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
+        $('#datepickerNoOfMonths').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            numberOfMonths: 2
+        });
+
+    });
+</script>
+

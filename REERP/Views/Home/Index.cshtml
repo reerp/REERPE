@@ -1,0 +1,288 @@
+﻿@using REERP.Models.ViewModels;
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/NewTheme _MainLayout_Sidebar.cshtml";
+}
+@model IEnumerable<REERP.Models.Productc>
+
+<div class="col-sm-12 row portlet light bordered">
+    <h2>Dashboard</h2>
+</div>
+
+<div class="col-sm-12">
+    <div class="col-sm-6">
+        <div class="row">
+
+            <div class="col-md-12  col-sm-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-green-sharp">
+                            <i class="icon-list font-green-sharp"></i>
+                            <span class="caption-subject bold uppercase">Receipts</span>
+                        </div>
+                        <div class="tools">
+                            <a href="#" class="collapse" data-original-title="" title=""></a>
+                        </div>
+                        <div class="actions">
+                            <a href="/ProductReceives" class="btn green" btn-success=""
+                               data-buttontype="btn_new_record"><i class="fa fa-money"></i>Receive</a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive" style="overflow:visible !important;">
+                            <table class="table table-striped table-condensed ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Receive Date
+                                        </th>
+                                        <th>
+                                            Branch Name
+                                        </th>
+                                        <th>
+                                            Stock Keeper
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.ReceivedStock)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item?.DateReceived?.Date
+                                            </td>
+                                            <td>
+                                                @item.BranchName
+                                            </td>
+                                            <td>
+                                                @item.UserName
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-green-sharp">
+                            <i class="icon-list font-green-sharp"></i>
+                            <span class="caption-subject bold uppercase">Transfers</span>
+                        </div>
+                        <div class="tools">
+                            <a href="#" class="collapse" data-original-title="" title=""></a>
+                        </div>
+                        <div class="actions">
+                            <a href="/ProductTransfers" class="btn green" btn-success=""
+                               data-buttontype="btn_new_record"><i class="fa fa-money"></i>Transfer</a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive" style="overflow:visible !important;">
+                            <table class="table table-striped table-condensed ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Transfered Date
+                                        </th>
+                                        <th>
+                                            From Branch
+                                        </th>
+                                        <th>
+                                            To Branch
+                                        </th>
+                                        <th>
+                                            Store Keeper
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.TransferredStock)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item?.DateTransfered
+                                            </td>
+                                            <td>
+                                                @item.FromBranchName
+                                            </td>
+                                            <td>
+                                                @item.ToBranchName
+                                            </td>
+                                            <td>
+                                                @item.UserName
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="col-sm-6">
+        <div class="row">
+
+            <div class="col-md-12  col-sm-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-green-sharp">
+                            <i class="icon-list font-green-sharp"></i>
+                            <span class="caption-subject bold uppercase">Sales</span>
+                        </div>
+                        <div class="tools">
+                            <a href="#" class="collapse" data-original-title="" title=""></a>
+                        </div>
+                        <div class="actions">
+                            <a href="/SalesInvoices" class="btn green" btn-success=""
+                               data-buttontype="btn_new_record"><i class="fa fa-money"></i>Sale</a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive" style="overflow:visible !important;">
+                            <table class="table table-striped table-condensed ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Product
+                                        </th>
+                                        <th>
+                                            Unit Price
+                                        </th>
+                                        <th>
+                                            Quantity Sold
+                                        </th>
+                                        <th>
+                                            Total Price
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (SalesReportViewModel item in ViewBag.GroupedSLIs)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.ProductName
+                                            </td>
+                                            <td>
+                                                @item.UnitPrice
+                                            </td>
+                                            <td>
+                                                @item.QuantitySold
+                                            </td>
+                                            <td>
+                                                @(item.QuantitySold * item.UnitPrice)
+                                            </td>
+                                        </tr>
+                                        //}
+
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-green-sharp">
+                            <i class="icon-list font-green-sharp"></i>
+                            <span class="caption-subject bold uppercase">Returns</span>
+                        </div>
+                        <div class="tools">
+                            <a href="#" class="collapse" data-original-title="" title=""></a>
+                        </div>
+                        <div class="actions">
+                            
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive" style="overflow:visible !important;">
+                            <table class="table table-striped table-condensed ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ReferenceNo
+                                        </th>
+                                        <th>
+                                            Customer Name
+                                        </th>
+                                        <th>
+                                            Branch Name
+                                        </th>
+                                        <th>
+                                            SalesType
+                                        </th>
+                                        <th>
+                                            Sales Person
+                                        </th>
+                                        <th>
+                                            Date Sold
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (REERP.Models.ViewModels.SalesInvoiceViewModel item in ViewBag.ReturnedSales)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ReferenceNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BranchName)
+                                            </td>
+                                            <td>
+                                                @if (item.SalesType == 0)
+                                                {
+                                                    <div>Credit</div>
+                                                }
+                                                else
+                                                {
+                                                    <div>Cash</div>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UserName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateSold)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Status)
+                                            </td>
+                                        </tr>
+                                        //}
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

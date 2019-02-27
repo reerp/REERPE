@@ -1,0 +1,58 @@
+﻿@model REERP.Models.SalesInvoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SalesInvoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SalesType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SalesType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateSold)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SalesInvoiceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

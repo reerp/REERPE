@@ -1,0 +1,132 @@
+﻿@model IEnumerable<REERP.Models.Productc>
+@using REERP.Security;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+    var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
+}
+@Styles.Render("~/Content/datatable")
+<div class="card pd-20 pd-sm-40">
+
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap" style="width: 100% !important;">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitOfMeasure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (REERP.Models.Productc item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitOfMeasure)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn yellow btn-sm" href="@Url.Action("Edit", "Productcs", new { id = item.ProductcId })"><span class="fa fa-edit"></span>Edit</a>
+                            <a class="btn red btn-sm btn-delete-product" href="#" productId="@item.ProductcId"><span class="fa fa-times-circle"></span>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal" id="cats-modal-product-delete">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 id="myModalLabel" class="modal-title">Delete Product</h4>
+            </div>
+
+
+            <div class="modal-body">
+
+                <p>
+                    Are you sure do you want to delete the Product?
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button id="yes-delete" class="btn btn-primary" type="submit">Yes</button>
+                <button id="no" class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/datatable")
+}
+<script>
+    $(function () {
+        $(".btn-delete-product").click(function () {
+            var productId = $(this).attr('productId');
+            $('#cats-modal-product-delete').modal('show');
+
+            $("#yes-delete").click(function () {
+
+                window.location = "@Url.Action("Delete", "Productcs")" + "/" + productId;
+
+            });
+        });
+        $("#datatable1").DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+        // Select2
+        $(".dataTables_length select").select2({ minimumResultsForSearch: Infinity });
+    });
+</script>
