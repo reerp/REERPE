@@ -1,13 +1,13 @@
 ﻿@model REERP.Models.Branch
 @using REERP.Security;
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add new branch";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
     var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
 }
 
 <div class="card pd-20 pd-sm-40">
-    <h6 class="card-body-title">Add Branch</h6>
+@*    <h6 class="card-body-title">Add Branch</h6>*@
     <p></p>
     @* @using (Html.BeginForm())*@
     @using (Html.BeginForm("Create", "Branches", FormMethod.Post, new { id = "frm_create_branch", @class = "form-horizontal" }))

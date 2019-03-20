@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<REERP.Models.Customer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Customers";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 
 }
@@ -9,6 +9,9 @@
 
 <div class="card pd-20 pd-sm-40">
    
+    <div class=" text-right">
+        <a href="@Url.Action("Create","Customers")" class="btn btn-link"><i class="ion ion-android-add"> </i> Add new customer</a>
+    </div>
     <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap">
             <thead>

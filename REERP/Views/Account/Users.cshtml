@@ -3,11 +3,14 @@
 @model IEnumerable<Register>
 
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "Accounts";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
 @Styles.Render("~/Content/datatable")
 <div class="card pd-20 pd-sm-40">
+    <div class=" text-right">
+        <a href="@Url.Action("Register","Account")" class="btn btn-link"><i class="ion ion-android-add"> </i> Add new account</a>
+    </div>
     <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap">
             <thead>

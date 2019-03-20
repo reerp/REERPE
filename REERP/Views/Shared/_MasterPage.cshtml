@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using REERP.Security
+@{
+   var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -37,16 +42,19 @@
 </div><!-- kt-sideleft-header -->
 <!-- ##### SIDEBAR MENU ##### -->
 <div class="kt-sideleft">
-    <label class="kt-sidebar-label">Navigation</label>
+@*    <label class="kt-sidebar-label">Navigation</label>*@
     <ul class="nav kt-sideleft-menu">
+        
+    @if (user.Role == "SalesPerson")
+    {
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="@Url.Action("Index", "SalesInvoices")" class="nav-link">
                 <i class="icon ion-ios-home-outline"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- nav-item -->
         <li class="nav-item">
-            <a href="" class="nav-link with-sub">
+            <a href="@Url.Action("Index","Customers")" class="nav-link with-sub">
                 <i class="icon ion-person-stalker"></i>
                 <span>Customers</span>
             </a>
@@ -54,7 +62,9 @@
                 <li class="nav-item"><a href="/Customers" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="/Customers/Create" class="nav-link">Register</a></li>
             </ul>
-        </li><!-- nav-item -->
+        </li>
+        <!-- nav-item -->
+   
         <li class="nav-item">
             <a href="" class="nav-link with-sub">
                 <i class="icon ion-cash"></i>
@@ -72,12 +82,10 @@
                 <span>Products</span>
             </a>
             <ul class="nav-sub">
-                <li class="nav-item"><a href="/Categories/Create" class="nav-link">Add Category</a></li>
-                <li class="nav-item"><a href="/Productcs/Create" class="nav-link">Add Item</a></li>
                
                 <li class="nav-item"><a href="/ProductReceives" class="nav-link">Received Products</a></li>
                 <li class="nav-item"><a href="/ProductReceives/Create" class="nav-link">Receive Products</a></li>
-                
+
                 <li class="nav-item"><a href="ProductTransfers" class="nav-link">Transfered Products</a></li>
                 <li class="nav-item"><a href="ProductTransfers/Create" class="nav-link">Transfer Products</a></li>
             </ul>
@@ -88,8 +96,8 @@
                 <span>Stock</span>
             </a>
             <ul class="nav-sub">
-                <li class="nav-item"><a href="map-google.html" class="nav-link">Recieve Products</a></li>
-                <li class="nav-item"><a href="map-vector.html" class="nav-link">Transfer Products</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">All Branch</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockByBranch","Stocks")" class="nav-link">By Branch</a></li>
             </ul>
         </li><!-- nav-item -->
         <li class="nav-item">
@@ -101,6 +109,56 @@
                 <li class="nav-item"><a href="table-basic.html" class="nav-link">Sales</a></li>
             </ul>
         </li><!-- nav-item -->
+    }
+    @if (user.Role == "Administrator")
+    {
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-person"></i>
+                <span>Account Management</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="@Url.Action("Index","Branches")" class="nav-link">Branches</a></li>
+                <li class="nav-item"><a href="@Url.Action("Users", "Account")" class="nav-link">Accounts</a></li>
+
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-cube"></i>
+                <span>Product Management</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="@Url.Action("Index","Categories")" class="nav-link">Category</a></li>
+                <li class="nav-item"><a href="@Url.Action("Index","Productcs")" class="nav-link">Product</a></li>
+                
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-cash"></i>
+                <span>Sales Management</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="@Url.Action("Index","Customers")" class="nav-link">Customer</a></li>
+                <li class="nav-item"><a href="@Url.Action("Index","SalesInvoices")" class="nav-link">Sales</a></li>
+                <li class="nav-item"><a href="@Url.Action("SalesReport","SalesInvoices")" class="nav-link">Sales Report</a></li>
+            </ul>
+        </li><!-- nav-item -->
+        <li class="nav-item">
+            <a href="" class="nav-link with-sub">
+                <i class="icon ion-pie-graph"></i>
+                <span>Stock Management</span>
+            </a>
+            <ul class="nav-sub">
+                <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">Recieve</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">Transfer</a></li>
+            </ul>
+        </li><!-- nav-item -->
+    }
+        
+        
+        
 
     </ul>
 </div><!-- kt-sideleft -->
@@ -115,18 +173,16 @@
 
         <div class="dropdown dropdown-profile">
             <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-                <img src="../img/img3.jpg" class="wd-32 rounded-circle" alt="">
-                <span class="logged-name"><span class="hidden-xs-down">Jane Doe</span> <i class="fa fa-angle-down mg-l-3"></i></span>
+                @*                <img src="../img/img3.jpg" class="wd-32 rounded-circle" alt="">*@
+                <span class="logged-name"><span class="hidden-xs-down">
+                  
+                   
+                    @User.Identity.GetUserName()
+                </span> <i class="fa fa-angle-down mg-l-3"></i></span>
             </a>
             <div class="dropdown-menu wd-200">
-                <ul class="list-unstyled user-profile-nav">
-                    <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
-                    <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-                    <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
-                    <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
-                    <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
-                    <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
-                </ul>
+                @Html.Partial("_LoginPartial")
+                
             </div><!-- dropdown-menu -->
         </div><!-- dropdown -->
     </div><!-- kt-headpanel-right -->

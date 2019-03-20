@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<REERP.Models.Productc>
 @using REERP.Security;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
     var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
 }
 @Styles.Render("~/Content/datatable")
 <div class="card pd-20 pd-sm-40">
-
+    <div class=" text-right">
+        <a href="@Url.Action("Create","Productcs")" class="btn btn-link"><i class="ion ion-android-add"> </i> Add new product</a>
+    </div>
     <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap" style="width: 100% !important;">
             <thead>

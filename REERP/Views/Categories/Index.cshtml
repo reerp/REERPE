@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<REERP.Models.Category>
 @using REERP.Security;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categories";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
     var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
 }
 @Styles.Render("~/Content/datatable")
 <div class="card pd-20 pd-sm-40">
-
+    <div class=" text-right">
+        <a href="@Url.Action("Create","Categories")" class="btn btn-link"><i class="ion ion-android-add"> </i> Add new category</a>
+    </div>
     <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap">
             <thead>

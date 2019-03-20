@@ -1,13 +1,13 @@
 ﻿@model REERP.Models.Productc
 @using REERP.Security;
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add new product";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
     var user = (MyIdentityUser)HttpContext.Current.Session["USER_INFO"];
 }
 
 <div class="card pd-20 pd-sm-40">
-    <h6 class="card-body-title">Add Product</h6>
+@*    <h6 class="card-body-title">Add Product</h6>*@
     <p></p>
     @using (Html.BeginForm("Create", "Productcs", FormMethod.Post, new { id = "frm_create_product", @class = "form-horizontal" }))
     {
@@ -66,7 +66,7 @@
                 </div><!--Col-4-->
                 <div class="col-lg-8">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-4" })
 
                         @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })

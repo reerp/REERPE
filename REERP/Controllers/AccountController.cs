@@ -1,18 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using REERP.Models;
+using REERP.Product.Services;
+using REERP.Security;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using Microsoft.AspNet.Identity.EntityFramework;
-
-using REERP.Models;
-using REERP.Security;
-using REERP.Product.Services;
 
 namespace REERP.Controllers
 {
@@ -35,14 +30,14 @@ namespace REERP.Controllers
             roleManager = new RoleManager<MyIdentityRole>(roleStore);
 
         }
-        
+
         public ActionResult Register()
         {
             ViewBag.RoleList = new SelectList(roleManager.Roles, "Id", "Name");
             ViewBag.BranchList = new SelectList(_branchService.GetAllBranches(), "BranchId", "BranchName");
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(Register model, string RoleList, int BranchList)
@@ -99,18 +94,18 @@ namespace REERP.Controllers
             if (user.Role != roleManager.FindById(RoleList).Name)
             {
                 userRole = user.Role;
-                user.Role = roleManager.FindById(RoleList).Name;                
+                user.Role = roleManager.FindById(RoleList).Name;
             }
-            
+
             IdentityResult result = userManager.Update(user);
 
             if (result.Succeeded)
             {
-                if (userRole!=null)
+                if (userRole != null)
                 {
                     userManager.RemoveFromRole(user.Id, userRole);
                     userManager.AddToRole(user.Id, user.Role);
-                }               
+                }
                 return RedirectToAction("Users", "Account");
             }
             else
@@ -236,12 +231,23 @@ namespace REERP.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
+            authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Login", "Account");
+        }
+
+
         [Authorize]
         public ActionResult Users()
         {
             var users = userManager.Users;
             var registers = new List<Register>();
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 var register = new Register
                 {

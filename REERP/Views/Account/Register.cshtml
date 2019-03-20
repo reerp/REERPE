@@ -1,13 +1,14 @@
 ﻿@model REERP.Models.Register
 
 @{
+    ViewBag.Title = "Create new account";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
 <link href="~/Content/katniss-template/css/jquery-ui.min.css" rel="stylesheet" />
 <script src="~/Content/katniss-template/js/jquery-ui.min.js"></script>
 
 <div class="card pd-20 pd-sm-40">
-    <h6 class="card-body-title">Register User</h6>
+    @*<h6 class="card-body-title">Register User</h6>*@
     <p></p>
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "frm_register_user", @class = "form-horizontal" }))
     {

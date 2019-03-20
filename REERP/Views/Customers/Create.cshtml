@@ -1,11 +1,11 @@
 ﻿@model REERP.Models.Customer
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add new customer";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
 <div class="card pd-20 pd-sm-40">
-    <h6 class="card-body-title">Add Customer</h6>
+@*    <h6 class="card-body-title">Add Customer</h6>*@
     @using (Html.BeginForm("Create", "Customers", FormMethod.Post, new { id = "frm_create_customer", @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken();
