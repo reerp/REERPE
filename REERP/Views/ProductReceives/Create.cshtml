@@ -70,7 +70,7 @@
                         @Html.Label("Product", new { @class = "form-control-label" })
                         @* @Html.DropDownList("ProductId", (SelectList)ViewData["ProductList"], new { @class = "form-control" })*@
                         <input type="text" id="txtProduct" name="Product" class = "form-control"  placeholder="Select Product" />
-                        <input type="hidden" id="hfCustomer" name="CustomerId" />
+                       
                         <input type="hidden" id="productId" name="productId" />
                     </div>
                 </div>
@@ -199,6 +199,7 @@
 
             var productName = $("#txtProduct").val(),
                 price = $("#price").val(),
+                productId = $("#productId").val(),
                 quantity = $("#quantity").val(),
                 detailsTableBody = $("#datatable2 tbody");
             // alert(t.hasValue(productName));
@@ -217,7 +218,7 @@
             ]).draw(false);
 
             productReceives.push({
-                ProductId: 1,
+                ProductId: productId,
                 Quantity: quantity,
                 UnitCost: price
             });
@@ -270,7 +271,7 @@
                 });
             },
             select: function (e, i) {
-                $("#hfCustomer").val(i.item.val);
+                $("#productId").val(i.item.val);
             },
             minLength: 0
         }).focus(function () {
