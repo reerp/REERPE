@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using REERP.Models;
+using REERP.Models.ViewModels;
+using REERP.Product.Services;
+using REERP.Security;
+using REERP.Store.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using REERP.Models;
-using REERP.Security;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using REERP.Product.Services;
-using REERP.Store.Services;
-using REERP.Models.ViewModels;
 using System.Net;
+using System.Web.Mvc;
 
 namespace REERP.Controllers
 {
@@ -48,7 +47,7 @@ namespace REERP.Controllers
                 {
                     FromBranchId = productTransfer.FromBranchId,
                     ToBranchId = productTransfer.ToBranchId,
-                    ProductTransferId= productTransfer.ProductTransferId,
+                    ProductTransferId = productTransfer.ProductTransferId,
                     DateTransfered = productTransfer.DateTransfered,
                     UserId = productTransfer.UserId,
                     UserName = userManager.FindById(productTransfer.UserId).FullName
@@ -121,7 +120,7 @@ namespace REERP.Controllers
                     {
                         ProductTransferLineItemId = productTransferLineItem.ProductTransferLineItemId,
                         ProductId = productTransferLineItem.ProductId,
-                        Productname = _productService.FindBy(s=>s.ProductcId== productTransferLineItem.ProductId).First().ProductName,
+                        Productname = _productService.FindBy(s => s.ProductcId == productTransferLineItem.ProductId).First().ProductName,
                         Quantity = productTransferLineItem.Quantity,
                     };
                     productTransferLineItemViewModels.Add(productTransferLineItemviewModel);
@@ -275,6 +274,30 @@ namespace REERP.Controllers
                 _productTransferService.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public JsonResult SaveTransfer(ProductTransfer O)
+        {
+            bool status = false;
+            if (ModelState.IsValid)
+            {
+                MyIdentityDbContext db = new MyIdentityDbContext();
+                UserStore<MyIdentityUser> userStore = new UserStore<MyIdentityUser>(db);
+                UserManager<MyIdentityUser> userManager = new UserManager<MyIdentityUser>(userStore);
+                MyIdentityUser user = userManager.FindByName(HttpContext.User.Identity.Name);
+
+                O.DateTransfered = DateTime.Now;
+                O.UserId = user.Id;
+
+                _productTransferService.AddProductTransfer(O);
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return new JsonResult { Data = new { status = status } };
         }
 
 

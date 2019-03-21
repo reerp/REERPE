@@ -1,14 +1,17 @@
 ﻿@model IEnumerable<REERP.Models.ViewModels.ProductReceiveViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Received items";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
 
 @Styles.Render("~/Content/datatable")
 
 <div class="card pd-20 pd-sm-40">
-
+    <div class="actions text-right">
+        <a href="@Url.Action("Create", "ProductReceives")" class="btn green" btn-success=""
+           data-buttontype="btn_new_record"><i class="ion ion-plus"> </i> Receive new item</a>
+    </div>
     <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap">
             <thead>
@@ -50,10 +53,7 @@
             </tbody>
         </table>
     </div>
-    <div class="actions">
-        <a href="@Url.Action("Create", "ProductReceives")" class="btn green" btn-success=""
-           data-buttontype="btn_new_record"><i class="fa fa-plus"></i>Receive Product</a>
-    </div>
+    
 </div>
 
 

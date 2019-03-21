@@ -83,16 +83,14 @@
             </a>
             <ul class="nav-sub">
                
-                <li class="nav-item"><a href="/ProductReceives" class="nav-link">Received Products</a></li>
-                <li class="nav-item"><a href="/ProductReceives/Create" class="nav-link">Receive Products</a></li>
+                <li class="nav-item"><a href="@Url.Action("Index","ProductReceives")" class="nav-link">Received Products</a></li>
 
-                <li class="nav-item"><a href="ProductTransfers" class="nav-link">Transfered Products</a></li>
-                <li class="nav-item"><a href="ProductTransfers/Create" class="nav-link">Transfer Products</a></li>
+                <li class="nav-item"><a href="@Url.Action("Index","ProductTransfers")" class="nav-link">Transfered Products</a></li>
             </ul>
         </li><!-- nav-item -->
         <li class="nav-item">
             <a href="" class="nav-link with-sub">
-                <i class="icon ion-archive"></i>
+                <i class="icon ion-pie-graph"></i>
                 <span>Stock</span>
             </a>
             <ul class="nav-sub">
