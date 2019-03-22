@@ -22,8 +22,8 @@ namespace REERP.Controllers
         private readonly IProductReceiveService _productReceiveService;
         private readonly IBranchService _branchService;
         private readonly IProductService _productService;
-        private UserManager<MyIdentityUser> userManager;
-        private RoleManager<MyIdentityRole> roleManager;
+        private readonly UserManager<MyIdentityUser> userManager;
+        private readonly RoleManager<MyIdentityRole> roleManager;
 
         public ProductReceivesController(IProductReceiveService productReceiveService,
             IBranchService branchService, IProductService productService)
@@ -57,6 +57,9 @@ namespace REERP.Controllers
                     ProductReceiveId = productReceive.ProductReceiveId,
 
                     UserId = productReceive.UserId,
+
+                    // var ProductReceiveLineItems = productReceive.ProductReceiveLineItems;
+
                     UserName = userManager.FindById(productReceive.UserId).FullName
                 };
                 productReceivesViewModels.Add(productReceiveViewModel);
@@ -64,6 +67,8 @@ namespace REERP.Controllers
             }
             return View(productReceivesViewModels);
         }
+
+
 
         // GET: ProductReceives/Details/5
         public ActionResult Details(int? id)
@@ -110,7 +115,7 @@ namespace REERP.Controllers
                     {
                         ProductReceiveLineItemId = productReceiveLineItem.ProductReceiveLineItemId,
                         ProductId = productReceiveLineItem.ProductId,
-                        Productname = _productService.FindBy(s=>s.ProductcId== productReceiveLineItem.ProductId).First().ProductName,
+                        Productname = _productService.FindBy(s => s.ProductcId == productReceiveLineItem.ProductId).First().ProductName,
                         Quantity = productReceiveLineItem.Quantity,
                         UnitCost = productReceiveLineItem.UnitCost
                     };
@@ -137,7 +142,7 @@ namespace REERP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( ProductReceiveViewModel productReceiveViewModel)
+        public ActionResult Create(ProductReceiveViewModel productReceiveViewModel)
         {
             if (ModelState.IsValid)
             {

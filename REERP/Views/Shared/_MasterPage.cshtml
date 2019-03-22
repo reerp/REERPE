@@ -149,8 +149,10 @@
                 <span>Stock Management</span>
             </a>
             <ul class="nav-sub">
-                <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">Recieve</a></li>
-                <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">Transfer</a></li>
+                <li class="nav-item"><a href="@Url.Action("Create","ProductReceives")" class="nav-link">Receive Items</a></li>
+                <li class="nav-item"><a href="@Url.Action("Create","ProductTransfers")" class="nav-link">Transfer Items</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch", "Stocks")" class="nav-link">Total Stock Report</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockByBranch", "Stocks")" class="nav-link">Branch Stock Report</a></li>
             </ul>
         </li><!-- nav-item -->
     }
