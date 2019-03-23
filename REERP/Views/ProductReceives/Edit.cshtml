@@ -1,54 +1,122 @@
 ﻿@model REERP.Models.ProductReceive
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/NewTheme _MainLayout_Sidebar.cshtml";
+    ViewBag.Title = "Edit received item";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
+<style type="text/css" class="init">
+    th {
+        white-space: nowrap;
+    }
+</style>
+<link href="~/Content/katniss-template/css/jquery-ui.min.css" rel="stylesheet" />
+@Styles.Render("~/Content/datatable")
+@Scripts.Render("~/bundles/datatable")
+<script src="/Content/katniss-template/js/jquery-ui.min.js"></script>
 
-<h2>Edit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("create", "ProductReceives", FormMethod.Post, new { id = "invoiceForm" }))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ProductReceive</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ProductReceiveId)
+    @Html.AntiForgeryToken();
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateReceived, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateReceived, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateReceived, "", new { @class = "text-danger" })
+    <div class="form-layout">
+        <div class="row mg-b-1">
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("User", new { @class = "form-control-label" })
+                    @Html.TextBoxFor(model => model.UserId, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.UserId), @readonly = "readonly", @Value = ViewBag.UserName })
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Branch, new { @class = "form-control-label" })
+                    @Html.TextBoxFor(model => model.Branch.BranchName, new { @class = "form-control", @readonly = "readonly" })
+                  
+                    @* @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", placeholder = Html.DisplayNameFor(n => n.UserName), @readonly = "readonly", @Value = ViewBag.BranchName })*@
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Invoice No", new { @class = "form-control-label" })
+                    @Html.TextBoxFor(model => model.InvoiceNO, new { @class = "form-control", @readonly = "readonly" })
+                    
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Date", new { @class = "form-control-label" })
+                    @Html.TextBoxFor(model => model.DateReceived, new { @class = "form-control", @readonly = "readonly"  })
+                   
+     
+                </div>
+            </div>
+        </div><!--row mg-b-1-->
+    </div><!--form-layout-->
+    <div class="form-layout">
+        <div class="row mg-b-1">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("Product", new { @class = "form-control-label" })
+                    @* @Html.DropDownList("ProductId", (SelectList)ViewData["ProductList"], new { @class = "form-control" })*@
+                    <input type="text" id="txtProduct" name="Product" class = "form-control"  placeholder="Select Product" />
+                       
+                    <input type="hidden" id="productId" name="productId" />
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Quantity", new { @class = "form-control-label" })
+                    <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity Here">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Unit Cost", new { @class = "form-control-label" })
+                    <input class="form-control valid" id="price" name="UnitCost" type="text" placeholder="Enter Unit Cost Here">
+
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+
+                    <label class="form-control-label"></label>
+                    <a  id="addRow" class="btn btn-primary btn-block mg-b-10 mg-t-5 btn-add-item" href="#" productReceiveId="@ViewBag.ProductReceiveId"><i class="fa fa-plus"></i>  Add Item</a>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BranchId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BranchId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+    </div><!--form-layout-->
+    <div>
+        <table id="datatable1" class="display">
+            <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+            </thead>
+            @foreach (var item in ViewBag.LineItem)
+            {
+            <tbody>
+            <tr>
+                <td>@item.Productname</td>
+                <td>@item.Quantity</td>
+                <td>@item.UnitCost</td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>  
+                }
+</table>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+<script>
+    $('#datatable1').DataTable({
+        bLengthChange: false,
+        searching: false,
+        responsive: true
+    });
+</script>

@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using REERP.Security;
 using REERP.Models;
 using REERP.Models.ViewModels;
-using REERP.Sales.Services;
 using REERP.Product.Services;
+using REERP.Sales.Services;
+using REERP.Security;
 using REERP.Store.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace REERP.Controllers
 {
@@ -55,7 +55,7 @@ namespace REERP.Controllers
             var salesInvoices = new List<SalesInvoice>();
             if (user.Role == "Administrator")
             {
-                salesInvoices = _salesInvoiceService.Get(t=>t.Status == "Paid", null, "SalesLineItems").OrderByDescending(o=>o.DateSold).ToList();
+                salesInvoices = _salesInvoiceService.Get(t => t.Status == "Paid", null, "SalesLineItems").OrderByDescending(o => o.DateSold).ToList();
             }
             else
             {
@@ -77,8 +77,8 @@ namespace REERP.Controllers
                               new
                               {
                                   ProductID = groupedSLI.Key.ProductId,
-                                  ProductName = _productService.FindBy(s=>s.ProductcId== groupedSLI.Key.ProductId).First().ProductName,
-                                  UnitPrice = _productService.FindBy(s=>s.ProductcId==groupedSLI.Key.ProductId).First().UnitPrice,
+                                  ProductName = _productService.FindBy(s => s.ProductcId == groupedSLI.Key.ProductId).First().ProductName,
+                                  UnitPrice = _productService.FindBy(s => s.ProductcId == groupedSLI.Key.ProductId).First().UnitPrice,
                                   QuantitySold = groupedSLI.Sum(p => p.Quantity)
                               });
             List<SalesReportViewModel> salesReportViewModels = (from groupedSLI in groupedSLIs let i = groupedSLI where i != null where i != null select new SalesReportViewModel() { ProductId = i.ProductID, ProductName = i.ProductName, QuantitySold = i.QuantitySold, UnitPrice = i.UnitPrice }).ToList();
@@ -123,6 +123,7 @@ namespace REERP.Controllers
                 productReceivesViewModels.Add(productReceiveViewModel);
             }
             ViewBag.ReceivedStock = salesInvoiceViewModels.Take(10);
+            // ViewBag.ReceivedItems = productReceivesViewModels.SingleOrDefault(x => x.BranchId == user.BranchId);
 
             var productTransfers = _productTransferService.GetAllProductTransfer();
             var producttransferViewModels = new List<ProductTransferViewModel>();
@@ -145,7 +146,7 @@ namespace REERP.Controllers
             }
             ViewBag.TransferredStock = salesInvoiceViewModels.Take(10);
 
-            if (user!=null)
+            if (user != null)
                 ViewBag.FullName = user.FullName;
             else
                 ViewBag.FullName = "Admin";

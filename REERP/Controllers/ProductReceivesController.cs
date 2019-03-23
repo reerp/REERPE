@@ -243,6 +243,28 @@ namespace REERP.Controllers
             {
                 return HttpNotFound();
             }
+            // var productReceivesViewModels = new List<ProductReceiveViewModel>();
+
+            var productReceiveLineItemViewModels = new List<ProductReceiveLineItemViewModel>();
+            foreach (var productReceiveLineItem in productReceive.ProductReceiveLineItems)
+            {
+                var productReceiveLineItemviewModel = new ProductReceiveLineItemViewModel()
+                {
+                    ProductReceiveLineItemId = productReceiveLineItem.ProductReceiveLineItemId,
+                    ProductId = productReceiveLineItem.ProductId,
+                    Productname = _productService.FindBy(s => s.ProductcId == productReceiveLineItem.ProductId).First().ProductName,
+                    Quantity = productReceiveLineItem.Quantity,
+                    UnitCost = productReceiveLineItem.UnitCost
+
+                };
+                productReceiveLineItemViewModels.Add(productReceiveLineItemviewModel);
+            }
+
+
+
+            ViewBag.LineItem = productReceiveLineItemViewModels;
+            MyIdentityUser user = userManager.FindById(productReceive.UserId);
+            ViewBag.UserName = user.FullName;
             return View(productReceive);
         }
 
