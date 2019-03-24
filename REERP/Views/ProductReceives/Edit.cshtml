@@ -104,7 +104,7 @@
                 <td>@item.Quantity</td>
                 <td>@item.UnitCost</td>
                 <td></td>
-                <td></td>
+                <td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td>
             </tr>
             </tbody>  
                 }
@@ -114,9 +114,161 @@
 
 
 <script>
-    $('#datatable1').DataTable({
-        bLengthChange: false,
-        searching: false,
-        responsive: true
+    var productReceives = [];
+
+    $.fn.dataTable.Api.register('hasValue()',
+        function (value) {
+            return this
+                .data()
+                .toArray()
+                .toString()
+                .toLowerCase()
+                .split(',')
+                .indexOf(value.toString().toLowerCase()) >
+                -1;
+        });
+    $(document).ready(function () {
+
+        var t = $('#datatable1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+
+                {
+                    extend: 'print',
+                    footer: true,
+                    messageTop: $('#head').html()
+                }
+            ],
+            "columnDefs": [{
+                "targets": 3,
+                "orderable": false
+            }],
+            bLengthChange: false,
+            searching: false,
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                    .column(3)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Total over this page
+                pageTotal = api
+                    .column(3, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(3).footer()).html(
+                    '$' + pageTotal + ' ( $' + total + ' total)'
+                );
+
+            }
+        });
+        var counter = 1;
+
+
+
+        $('#addRow').on('click', function () {
+            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") {
+                alert("Please add Item");
+                return;
+            }
+
+            var productName = $("#txtProduct").val(),
+                price = $("#price").val(),
+                productId = $("#productId").val(),
+                quantity = $("#quantity").val(),
+                detailsTableBody = $("#datatable2 tbody");
+            // alert(t.hasValue(productName));
+            //alert(t.hasValue(productName));
+            if (t.hasValue(productName)) {
+                alert("Item Exsists");
+                clearItem();
+                return;
+            }
+            t.row.add([
+                productName,
+                quantity,
+                price,
+                (parseFloat(price) * parseInt(quantity)),
+                '<a data-itemId="0" href="#" class="deleteItem">Remove</a>'
+            ]).draw(false);
+
+            productReceives.push({
+                ProductId: productId,
+                Quantity: quantity,
+                UnitCost: price
+            });
+            clearItem();
+        });
+
+        // Automatically add a first row of data
+        //$('#addRow').click();
+        //After Adding an item In The List, Clear Clean The Form For to Add More.
+        function clearItem() {
+            //$("#productName").val('');
+            $("#txtProduct").val('');
+            $("#price").val('');
+            $("#quantity").val('');
+            $("#productId").val('');
+        }
+        // After Add an item In The List, If You Want, You Can Remove It.
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+
+                $(this).parents('tr').css("background-color", "#F30808").fadeOut(900, function () {
+
+                    t.row(this).remove().draw(false);
+                });
+            }
+        });
+
+    });
+    $(function () {
+        $("#txtProduct").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/ProductReceives/AutoComplete/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#productId").val(i.item.val);
+            },
+            minLength: 0
+        }).focus(function () {
+            $(this).autocomplete("search");
+        });
     });
 </script>

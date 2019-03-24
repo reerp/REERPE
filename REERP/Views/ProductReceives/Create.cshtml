@@ -136,15 +136,17 @@
 <script>
     var productReceives = [];
 
-    $.fn.dataTable.Api.register('hasValue()', function (value) {
-        return this
-            .data()
-            .toArray()
-            .toString()
-            .toLowerCase()
-            .split(',')
-            .indexOf(value.toString().toLowerCase()) > -1
-    })
+    $.fn.dataTable.Api.register('hasValue()',
+        function (value) {
+            return this
+                .data()
+                .toArray()
+                .toString()
+                .toLowerCase()
+                .split(',')
+                .indexOf(value.toString().toLowerCase()) >
+                -1;
+        });
     $(document).ready(function () {
 
         var t = $('#datatable1').DataTable({
@@ -243,6 +245,7 @@
             $("#txtProduct").val('');
             $("#price").val('');
             $("#quantity").val('');
+            $("#productId").val('');
         }
         // After Add an item In The List, If You Want, You Can Remove It.
         $(document).on('click', 'a.deleteItem', function (e) {
@@ -294,8 +297,7 @@
 
     //Save button click function
     $('a#saveInvoice').click(function () {
-        //$('form#invoiceForm').submit();
-        //validation of order
+       
         alert("save started");
         var isAllValid = true;
         if (productReceives.length == 0) {
@@ -303,29 +305,10 @@
             isAllValid = false;
         }
 
-        //if ($('#orderNo').val().trim() == '') {
-        //    $('#orderNo').siblings('span.error').css('visibility', 'visible');
-        //    isAllValid = false;
-        //}
-        //else {
-        //    $('#orderNo').siblings('span.error').css('visibility', 'hidden');
-        //}
-
-        //if ($('#orderDate').val().trim() == '') {
-        //    $('#orderDate').siblings('span.error').css('visibility', 'visible');
-        //    isAllValid = false;
-        //}
-        //else {
-        //    $('#orderDate').siblings('span.error').css('visibility', 'hidden');
-        //}
-
-        //Save if valid
+       
         if (isAllValid) {
             var data = {
-                //OrderNo: $('#orderNo').val().trim(),
-                //OrderDate: $('#orderDate').val().trim(),
-                //Sorry forgot to add Description Field
-                //Description: $('#description').val().trim(),
+              
                 BranchId: $('#branchId').val().trim(),
                 InvoiceNO: $('#txtInvoiceNo').val().trim(),
                 ProductReceiveLineItems: productReceives
@@ -346,9 +329,6 @@
                         alert('Successfully saved.');
                         //clear form
                         productReceives = [];
-                        //$('#orderNo').val('');
-                        //$('#orderDate').val('');
-                        //$('#orderItems').empty();
                     }
                     else {
                         alert('Failed');
