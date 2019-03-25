@@ -54,32 +54,20 @@
             </a>
         </li><!-- nav-item -->
         <li class="nav-item">
-            <a href="@Url.Action("Index","Customers")" class="nav-link with-sub">
-                <i class="icon ion-person-stalker"></i>
-                <span>Customers</span>
-            </a>
-            <ul class="nav-sub">
-                <li class="nav-item"><a href="/Customers" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="/Customers/Create" class="nav-link">Register</a></li>
-            </ul>
-        </li>
-        <!-- nav-item -->
-   
-        <li class="nav-item">
-            <a href="" class="nav-link with-sub">
+            <a href="" class="nav-link with-sub active">
                 <i class="icon ion-cash"></i>
-                <span>Sales</span>
+                <span>Sales Management</span>
             </a>
             <ul class="nav-sub">
-                <li class="nav-item"><a href="/SalesInvoices" class="nav-link">Sales</a></li>
-                <li class="nav-item"><a href="/SalesInvoices/Create" class="nav-link">Cash Sales</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Credit Sales</a></li>
+                <li class="nav-item"><a href="@Url.Action("Index","Customers")" class="nav-link">Customers</a></li>
+                <li class="nav-item"><a href="@Url.Action("Index","SalesInvoices")" class="nav-link">Sales</a></li>
+                <li class="nav-item"><a href="@Url.Action("SalesReport","SalesInvoices")" class="nav-link">Sales Report</a></li>
             </ul>
         </li><!-- nav-item -->
         <li class="nav-item">
             <a href="" class="nav-link with-sub">
                 <i class="icon ion-cube"></i>
-                <span>Products</span>
+                <span>Products Management</span>
             </a>
             <ul class="nav-sub">
                
@@ -91,7 +79,7 @@
         <li class="nav-item">
             <a href="" class="nav-link with-sub">
                 <i class="icon ion-pie-graph"></i>
-                <span>Stock</span>
+                <span>Stock Management</span>
             </a>
             <ul class="nav-sub">
                 <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">All Branch</a></li>
@@ -144,7 +132,7 @@
             </ul>
         </li><!-- nav-item -->
         <li class="nav-item">
-            <a href="" class="nav-link with-sub">
+            <a href="" class="nav-link with-sub active">
                 <i class="icon ion-pie-graph"></i>
                 <span>Stock Management</span>
             </a>

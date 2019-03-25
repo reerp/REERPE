@@ -1379,6 +1379,7 @@
     <Content Include="Views\Stocks\ReportStockAllBranch.cshtml" />
     <Content Include="Views\Stocks\ReportStockByBranch.cshtml" />
     <Content Include="Views\Shared\_MasterPage.cshtml" />
+    <Content Include="Views\ProductTransfers\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\assetss\admin\img\" />

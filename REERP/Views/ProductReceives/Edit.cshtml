@@ -18,7 +18,15 @@
 @using (Html.BeginForm("create", "ProductReceives", FormMethod.Post, new { id = "invoiceForm" }))
 {
     @Html.AntiForgeryToken();
+    <div class="form-layout">
+        <div class="row mg-b-7">
+            <div class="col-lg-8 text-right"></div>
+            <div class="col-lg-4 text-right"><button type="button" class="btn btn-primary btn-sm mg-r-5"><i class="fa fa-save"> </i> Save </button> 
+            <button type="button" class="btn btn-info btn-sm mg-r-5"><i class="fa fa-print"> </i> Print</button>
+            <a href="@Url.Action("Index","ProductReceives")" class="btn btn-danger btn-sm"><i class="fa fa-close"> </i> Cancel</a></div>
 
+            </div>
+    </div>
     <div class="form-layout">
         <div class="row mg-b-1">
             <div class="col-lg-3">
