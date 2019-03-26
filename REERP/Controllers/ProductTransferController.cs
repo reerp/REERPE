@@ -207,18 +207,48 @@ namespace REERP.Controllers
 
 
         // GET: ProductTransfer/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductTransfer productTransfer = _productTransferService.FindById(id);
+            var productTransfer = _productTransferService.Get(t => t.ProductTransferId == id, null, "ProductTransferLineItems").FirstOrDefault();
+
             if (productTransfer == null)
             {
                 return HttpNotFound();
             }
-            return View(productTransfer);
+            var productTransferViewModel = new ProductTransferViewModel()
+            {
+                FromBranchId = productTransfer.FromBranchId,
+                FromBranchName = _branchService.FindById(productTransfer.FromBranchId).BranchName,
+                ToBranchId = productTransfer.ToBranchId,
+                ToBranchName = _branchService.FindById(productTransfer.ToBranchId).BranchName,
+                ProductTransferId = productTransfer.ProductTransferId,
+                DateTransfered = productTransfer.DateTransfered,
+                UserId = productTransfer.UserId,
+                UserName = userManager.FindById(productTransfer.UserId).FullName
+            };
+
+
+            var productTransferLineItemViewModels = new List<ProductTransferLineItemViewModel>();
+
+            foreach (var productTransferLineItem in productTransfer.ProductTransferLineItems)
+            {
+                var productTransferLineItemviewModel = new ProductTransferLineItemViewModel()
+                {
+                    ProductTransferLineItemId = productTransferLineItem.ProductTransferLineItemId,
+                    ProductId = productTransferLineItem.ProductId,
+                    Productname = _productService.FindBy(s => s.ProductcId == productTransferLineItem.ProductId).First().ProductName,
+                    Quantity = productTransferLineItem.Quantity,
+                };
+                productTransferLineItemViewModels.Add(productTransferLineItemviewModel);
+            }
+
+            ViewBag.ProductTransferLineItemViewModels = productTransferLineItemViewModels;
+
+            return View(productTransferViewModel);
         }
 
         // POST: ProductTransfer/Edit/5
