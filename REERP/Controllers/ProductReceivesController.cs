@@ -190,7 +190,7 @@ namespace REERP.Controllers
             return RedirectToAction("Create", "ProductReceives", new { id = productReceive.ProductReceiveId });
         }
 
-        //Post action for Save data to database
+        //Post action for Save new invoice data to database
         [HttpPost]
         public JsonResult SavePurchase(ProductReceive O)
         {
@@ -214,6 +214,30 @@ namespace REERP.Controllers
                 //}
                 //dc.Orders.Add(order);
                 //dc.SaveChanges();
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return new JsonResult { Data = new { status = status } };
+        }
+
+        //Post action for Save new invoice data to database
+        [HttpPost]
+        public JsonResult SaveEditPurchase(ProductReceive O)
+        {
+            bool status = false;
+            if (ModelState.IsValid)
+            {
+                MyIdentityDbContext db = new MyIdentityDbContext();
+                UserStore<MyIdentityUser> userStore = new UserStore<MyIdentityUser>(db);
+                UserManager<MyIdentityUser> userManager = new UserManager<MyIdentityUser>(userStore);
+                MyIdentityUser user = userManager.FindByName(HttpContext.User.Identity.Name);
+
+                O.DateReceived = DateTime.Now;
+                O.UserId = user.Id;
+                _productReceiveService.AddProductReceive(O);
                 status = true;
             }
             else
@@ -286,6 +310,8 @@ namespace REERP.Controllers
             return View(productReceive);
         }
 
+
+
         [Authorize]
         // GET: ProductReceives/Delete/5
         public ActionResult Delete(int? id)
@@ -331,6 +357,8 @@ namespace REERP.Controllers
         {
             if (disposing)
             {
+                _branchService.Dispose();
+                _productService.Dispose();
                 _productReceiveService.Dispose();
             }
             base.Dispose(disposing);
