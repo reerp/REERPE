@@ -17,6 +17,7 @@ using System.Web.Mvc;
 
 namespace REERP.Controllers
 {
+    [Authorize]
     public class ProductReceivesController : Controller
     {
         private readonly IProductReceiveService _productReceiveService;
@@ -84,7 +85,7 @@ namespace REERP.Controllers
             }
             return View(productReceive);
         }
-
+        [Authorize]
         // GET: ProductReceives/Create
         public ActionResult Create(int? id)
         {
@@ -140,6 +141,7 @@ namespace REERP.Controllers
         // POST: ProductReceives/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductReceiveViewModel productReceiveViewModel)
@@ -318,6 +320,8 @@ namespace REERP.Controllers
                                select new
                                {
                                    label = product.ProductName,
+                                   price = product.UnitPrice,
+                                   cost = product.UnitCost,
                                    val = product.ProductcId
                                }).ToList();
             return Json(productList, JsonRequestBehavior.AllowGet);

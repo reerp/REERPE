@@ -978,6 +978,11 @@
     <Content Include="Content\katniss-template\js\moment.js" />
     <Content Include="Content\katniss-template\js\perfect-scrollbar.jquery.js" />
     <Content Include="Content\katniss-template\js\popper.js" />
+    <Content Include="Content\katniss-template\lib\images\sort_asc.png" />
+    <Content Include="Content\katniss-template\lib\images\sort_asc_disabled.png" />
+    <Content Include="Content\katniss-template\lib\images\sort_both.png" />
+    <Content Include="Content\katniss-template\lib\images\sort_desc.png" />
+    <Content Include="Content\katniss-template\lib\images\sort_desc_disabled.png" />
     <Content Include="Content\kendo\2013.1.319\Black\editor.png" />
     <Content Include="Content\kendo\2013.1.319\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2013.1.319\Black\loading-image.gif" />

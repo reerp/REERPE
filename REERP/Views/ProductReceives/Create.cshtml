@@ -84,16 +84,23 @@
                         <input type="hidden" id="productId" name="productId" />
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="form-group">
                         @Html.Label("Quantity", new { @class = "form-control-label" })
-                        <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity Here">
+                        <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity">
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="form-group">
                         @Html.Label("Unit Cost", new { @class = "form-control-label" })
-                        <input class="form-control valid" id="price" name="UnitCost" type="text" placeholder="Enter Unit Cost Here">
+                        <input class="form-control valid" id="unitCost" name="UnitCost" type="text" placeholder="Enter Unit Cost">
+
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        @Html.Label("Unit Price", new { @class = "form-control-label" })
+                        <input class="form-control valid" id="unitPrice" name="UnitPrice" type="text" placeholder="Enter Unit Price">
 
                     </div>
                 </div>
@@ -113,8 +120,10 @@
         <table id="datatable1" class="display">
             <thead>
             <tr>
+@*                <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 1px;"></th>*@
                 <th>Product Name</th>
                 <th>Unit Cost</th>
+                <th>Unit Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
                 <th></th>
@@ -125,7 +134,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="3" style="text-align:right">Total:</th>
+                <th colspan="4" style="text-align:right">Total:</th>
                 <th></th>
             </tr>
             </tfoot>
@@ -162,7 +171,8 @@
             "columnDefs": [ {
                 "targets": 3,
                 "orderable": false
-            } ],
+            }],
+            "order": [[ 1, 'asc' ]],
             bLengthChange: false,
             searching: false,
             "footerCallback": function (row, data, start, end, display) {
@@ -178,7 +188,7 @@
 
                 // Total over all pages
                 total = api
-                    .column(3)
+                    .column(4)
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
@@ -186,31 +196,33 @@
 
                 // Total over this page
                 pageTotal = api
-                    .column(3, { page: 'current' })
+                    .column(4, { page: 'current' })
                     .data()
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
 
                 // Update footer
-                $(api.column(3).footer()).html(
+                $(api.column(4).footer()).html(
                     '$' + pageTotal + ' ( $' + total + ' total)'
                 );
 
             }
+            
         });
         var counter = 1;
 
 
 
         $('#addRow').on('click', function () {
-            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") {
+            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#unitCost").val()) == "" || $.trim($("#quantity").val()) == "") {
                 alert("Please add Item");
                 return;
             }
 
             var productName = $("#txtProduct").val(),
-                price = $("#price").val(),
+                unitCost = $("#unitCost").val(),
+                unitPrice = $("#unitPrice").val(),
                 productId = $("#productId").val(),
                 quantity = $("#quantity").val(),
                 detailsTableBody = $("#datatable2 tbody");
@@ -221,18 +233,21 @@
                 clearItem();
                 return;
             }
+           
             t.row.add([
                 productName,
+                unitCost,
+                unitPrice,
                 quantity,
-                price,
-                (parseFloat(price) * parseInt(quantity)),
+                (parseFloat(unitPrice) * parseInt(quantity)),
                 '<a data-itemId="0" href="#" class="deleteItem">Remove</a>'
             ]).draw(false);
 
             productReceives.push({
                 ProductId: productId,
                 Quantity: quantity,
-                UnitCost: price
+                UnitCost: unitCost,
+                UnitPrice: unitPrice
             });
             clearItem();
         });
@@ -243,7 +258,8 @@
         function clearItem() {
             //$("#productName").val('');
             $("#txtProduct").val('');
-            $("#price").val('');
+            $("#unitPrice").val('');
+            $("#unitCost").val('');
             $("#quantity").val('');
             $("#productId").val('');
         }
@@ -271,9 +287,10 @@
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
-                        response($.map(data, function (item) {
-                            return item;
-                        }))
+                        response($.map(data,
+                            function(item) {
+                                return item;
+                            }));
                     },
                     error: function (response) {
                         alert(response.responseText);
@@ -285,6 +302,8 @@
             },
             select: function (e, i) {
                 $("#productId").val(i.item.val);
+                $("#unitPrice").val(i.item.price);
+                $("#unitCost").val(i.item.cost);
             },
             minLength: 0
         }).focus(function () {
@@ -329,6 +348,7 @@
                         alert('Successfully saved.');
                         //clear form
                         productReceives = [];
+                        //@Url.Action("Index","ProductReceives");
                     }
                     else {
                         alert('Failed');
