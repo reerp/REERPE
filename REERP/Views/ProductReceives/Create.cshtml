@@ -208,7 +208,7 @@
                 );
 
             }
-            
+
         });
         var counter = 1;
 
@@ -233,7 +233,7 @@
                 clearItem();
                 return;
             }
-           
+
             t.row.add([
                 productName,
                 unitCost,
@@ -316,7 +316,7 @@
 
     //Save button click function
     $('a#saveInvoice').click(function () {
-       
+
         alert("save started");
         var isAllValid = true;
         if (productReceives.length == 0) {
@@ -324,10 +324,10 @@
             isAllValid = false;
         }
 
-       
+
         if (isAllValid) {
             var data = {
-              
+
                 BranchId: $('#branchId').val().trim(),
                 InvoiceNO: $('#txtInvoiceNo').val().trim(),
                 ProductReceiveLineItems: productReceives
@@ -342,13 +342,14 @@
                 dataType: "JSON",
                 contentType: "application/json",
                 success: function (d) {
-                    //check is successfully save to database 
+                    //check is successfully save to database
                     if (d.status == true) {
                         //will send status from server side
                         alert('Successfully saved.');
                         //clear form
                         productReceives = [];
                         //@Url.Action("Index","ProductReceives");
+                        window.location.href = '@Url.Action("Index", "ProductReceives")';
                     }
                     else {
                         alert('Failed');

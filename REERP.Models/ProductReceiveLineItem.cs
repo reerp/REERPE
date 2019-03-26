@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace REERP.Models
 {
@@ -19,6 +14,10 @@ namespace REERP.Models
         [Range(1, 10000000)]
         [DisplayName("Unit Cost")]
         public decimal UnitCost { get; set; }
+
+        //        [Range(1, 10000000)]
+        //        [DisplayName("Unit Price")]
+        //        public decimal UnitPrice { get; set; }
 
         public int ProductReceiveId { get; set; }
         public ProductReceive ProductReceive { get; set; }
