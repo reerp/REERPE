@@ -44,9 +44,11 @@
 <div class="kt-sideleft">
 @*    <label class="kt-sidebar-label">Navigation</label>*@
     <ul class="nav kt-sideleft-menu">
-        
-    @if (user.Role == "SalesPerson")
-    {
+ 
+        @if (user != null)
+        {
+            if (user.Role == "SalesPerson")
+            {
         <li class="nav-item">
             <a href="@Url.Action("Index", "SalesInvoices")" class="nav-link">
                 <i class="icon ion-ios-home-outline"></i>
@@ -96,6 +98,7 @@
             <ul class="nav-sub">
                 <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch","Stocks")" class="nav-link">All Branch</a></li>
                 <li class="nav-item"><a href="@Url.Action("ReportStockByBranch","Stocks")" class="nav-link">By Branch</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockStatus","Stocks")" class="nav-link">Stock status</a></li>
             </ul>
         </li><!-- nav-item -->
         <li class="nav-item">
@@ -108,8 +111,9 @@
             </ul>
         </li><!-- nav-item -->
     }
-    @if (user.Role == "Administrator")
-    {
+
+            if (user.Role == "Administrator")
+            {
         <li class="nav-item">
             <a href="" class="nav-link with-sub">
                 <i class="icon ion-person"></i>
@@ -153,10 +157,11 @@
                 <li class="nav-item"><a href="@Url.Action("Create","ProductTransfers")" class="nav-link">Transfer Items</a></li>
                 <li class="nav-item"><a href="@Url.Action("ReportStockAllBranch", "Stocks")" class="nav-link">Total Stock Report</a></li>
                 <li class="nav-item"><a href="@Url.Action("ReportStockByBranch", "Stocks")" class="nav-link">Branch Stock Report</a></li>
+                <li class="nav-item"><a href="@Url.Action("ReportStockStatus","Stocks")" class="nav-link">Stock status</a></li>
             </ul>
         </li><!-- nav-item -->
     }
-        
+        }     
         
         
 
