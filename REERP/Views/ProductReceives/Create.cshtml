@@ -14,10 +14,60 @@
 @Scripts.Render("~/bundles/datatable")
 <script src="/Content/katniss-template/js/jquery-ui.min.js"></script>
 
+
+
+<div class="alert alert-primary alert-bordered pd-y-20" style="display: none;" id="savingStarted" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-flex align-items-center justify-content-center">
+        <i class="icon ion-ios-information alert-icon tx-52 tx-info mg-r-20"></i>
+        <div>
+            <h5 class="mg-b-2 tx-info">Saving started</h5>
+
+            <div class="sk-wave" style="margin: 2px auto;width: 90px;height: 25px;">
+                <div class="sk-rect sk-rect1 bg-gray-400"></div>
+                <div class="sk-rect sk-rect2 bg-gray-400"></div>
+                <div class="sk-rect sk-rect2 bg-gray-800"></div>
+                <div class="sk-rect sk-rect3 bg-gray-400"></div>
+                <div class="sk-rect sk-rect4 bg-gray-800"></div>
+                <div class="sk-rect sk-rect5 bg-gray-400"></div>
+                <div class="sk-rect sk-rect4 bg-gray-800"></div>
+            </div>
+        </div>
+    </div><!-- d-flex -->
+</div><!-- alert -->
+<div class="alert alert-success pd-y-20" style="display: none" id="savedSuccess" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-sm-flex align-items-center justify-content-start">
+        <i class="icon ion-ios-checkmark alert-icon tx-52 mg-r-20 tx-success"></i>
+        <div class="mg-t-20 mg-sm-t-0">
+            <h5 class="mg-b-2 tx-success">Successfully saved !!</h5>
+        </div>
+    </div><!-- d-flex -->
+</div><!-- alert -->
+
+<div class="alert alert-danger pd-y-20 mg-b-0" style="display: none;" id="saveError" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-sm-flex align-items-center justify-content-start">
+        <i class="icon ion-ios-close alert-icon tx-52 tx-danger mg-r-20"></i>
+        <div class="mg-t-20 mg-sm-t-0">
+            <h5 class="mg-b-2 tx-danger">Oh snap! Error </h5>
+            <p class="mg-b-0 tx-gray">Change a few things up and try submitting again....</p>
+        </div>
+    </div><!-- d-flex -->
+</div><!-- alert -->
+
+
+
 <div class="card pd-10 pd-sm-20">
     <div class="row">
-        <div class="col-sm-3 col-md-6">
-@*            <h6 class="card-body-title">Create Product Receive</h6>*@
+        <div class="col-sm-6 col-md-8">
+            @*            <h6 class="card-body-title">Create Product Receive</h6>*@
         </div><!-- col-sm-6 -->
         <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
@@ -26,25 +76,18 @@
             </div>
 
         </div><!-- col-sm-3 -->
+
+
         <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
             <div class="actions">
-                <a class="btn btn-info btn-block mg-b-10 btn-add-product-receive-line-item" id="print" href="#" productReceiveId="@ViewBag.ProductReceiveId"><i class="fa fa-print"></i>  Print</a>
-            </div>
-
-        </div><!-- col-sm-3 -->
-       
-        
-        <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
-
-            <div class="actions">
-                <a class="btn btn-danger btn-block mg-b-10 "  href="@Url.Action("Index","ProductReceives")" ><i class="fa fa-close"></i>  Cancle</a>
+                <a class="btn btn-danger btn-block mg-b-10 " href="@Url.Action("Index","ProductReceives")"><i class="fa fa-close"></i>  Cancle</a>
             </div>
 
         </div><!-- col-sm-3 -->
 
     </div>
-   
+
     <p></p>
     @using (Html.BeginForm("create", "ProductReceives", FormMethod.Post, new { id = "invoiceForm" }))
     {
@@ -79,8 +122,8 @@
                     <div class="form-group">
                         @Html.Label("Product", new { @class = "form-control-label" })
                         @* @Html.DropDownList("ProductId", (SelectList)ViewData["ProductList"], new { @class = "form-control" })*@
-                        <input type="text" id="txtProduct" name="Product" class = "form-control"  placeholder="Select Product" />
-                       
+                        <input type="text" id="txtProduct" name="Product" class="form-control" placeholder="Select Product" />
+
                         <input type="hidden" id="productId" name="productId" />
                     </div>
                 </div>
@@ -108,35 +151,33 @@
                     <div class="form-group">
 
                         <label class="form-control-label"></label>
-                        <a  id="addRow" class="btn btn-primary btn-block mg-b-10 mg-t-5 btn-add-item" href="#" productReceiveId="@ViewBag.ProductReceiveId"><i class="fa fa-plus"></i>  Add Item</a>
+                        <a id="addRow" class="btn btn-primary btn-block mg-b-10 mg-t-5 btn-add-item" href="#" productReceiveId="@ViewBag.ProductReceiveId"><i class="fa fa-plus"></i>  Add Item</a>
                     </div>
                 </div>
             </div>
         </div><!--form-layout-->
     }
 </div><!--card pd-10 pd-sm-20 form-->
-<div class="card pd-10 pd-sm-20">
+                        <div class="card pd-10 pd-sm-20">
     <div class="table-wrapper">
         <table id="datatable1" class="display">
             <thead>
-            <tr>
-@*                <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 1px;"></th>*@
-                <th>Product Name</th>
-                <th>Unit Cost</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
+                <tr>
+                    @*                <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 1px;"></th>*@
+                    <th>Product Name</th>
+                    <th>Unit Cost</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
             </thead>
-            <tbody>          
-                   
-            </tbody>
+            <tbody></tbody>
             <tfoot>
-            <tr>
-                <th colspan="4" style="text-align:right">Total:</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th colspan="4" style="text-align:right">Total:</th>
+                    <th></th>
+                </tr>
             </tfoot>
         </table>
     </div>
@@ -168,11 +209,11 @@
                     messageTop: $('#head').html()
                 }
             ],
-            "columnDefs": [ {
+            "columnDefs": [{
                 "targets": 3,
                 "orderable": false
             }],
-            "order": [[ 1, 'asc' ]],
+            "order": [[1, 'asc']],
             bLengthChange: false,
             searching: false,
             "footerCallback": function (row, data, start, end, display) {
@@ -288,7 +329,7 @@
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         response($.map(data,
-                            function(item) {
+                            function (item) {
                                 return item;
                             }));
                     },
@@ -317,7 +358,8 @@
     //Save button click function
     $('a#saveInvoice').click(function () {
 
-        alert("save started");
+       // alert("save started");
+        $("#savingStarted").show();
         var isAllValid = true;
         if (productReceives.length == 0) {
             $('#datatable1').html('<span style="color:red;">Please add order items</span>');
@@ -333,7 +375,7 @@
                 ProductReceiveLineItems: productReceives
             }
 
-            $(this).val('Please wait...');
+           // $(this).val('Please wait...');
 
             $.ajax({
                 url: '/ProductReceives/SavePurchase',
@@ -345,19 +387,26 @@
                     //check is successfully save to database
                     if (d.status == true) {
                         //will send status from server side
-                        alert('Successfully saved.');
+                       // alert('Successfully saved.');
                         //clear form
+                        $("#savingStarted").hide();
+                        $("#savedSuccess").show();
                         productReceives = [];
                         //@Url.Action("Index","ProductReceives");
                         window.location.href = '@Url.Action("Index", "ProductReceives")';
                     }
                     else {
-                        alert('Failed');
+                        $("#savingStarted").hide();
+                        $("#saveError").show();
+                        //alert('Failed');
                     }
                     $('#saveInvoice').val('Save');
                 },
                 error: function () {
-                    alert('Error. Please try again.');
+                    $("#savingStarted").hide();
+                    $("#savedSuccess").hide();
+                    //alert('Error. Please try again.');
+                    $("#saveError").show();
                     $('#saveInvoice').val('Save');
                 }
             });
@@ -366,4 +415,6 @@
     });
 
 </script>
+
+
 
