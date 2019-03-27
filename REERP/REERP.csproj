@@ -1410,6 +1410,7 @@
     <Content Include="Views\Reports\StockReportData.xsc">
       <DependentUpon>StockReportData.xsd</DependentUpon>
     </Content>
+    <Content Include="Views\ProductReceives\Invoice.cshtml" />
     <None Include="Views\Reports\StockReportData.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

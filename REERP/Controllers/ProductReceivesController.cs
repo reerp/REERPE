@@ -353,6 +353,42 @@ namespace REERP.Controllers
                                }).ToList();
             return Json(productList, JsonRequestBehavior.AllowGet);
         }
+
+        // Print Invoice
+
+        public ActionResult Invoice(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ProductReceive productReceive = _productReceiveService.FindById(id.Value);
+            if (productReceive == null)
+            {
+                return HttpNotFound();
+            }
+
+            var productReceiveLineItemViewModels = new List<ProductReceiveLineItemViewModel>();
+            foreach (var productReceiveLineItem in productReceive.ProductReceiveLineItems)
+            {
+                var productReceiveLineItemviewModel = new ProductReceiveLineItemViewModel()
+                {
+                    ProductReceiveLineItemId = productReceiveLineItem.ProductReceiveLineItemId,
+                    ProductId = productReceiveLineItem.ProductId,
+                    Productname = _productService.FindBy(s => s.ProductcId == productReceiveLineItem.ProductId).First().ProductName,
+                    Quantity = productReceiveLineItem.Quantity,
+                    UnitCost = productReceiveLineItem.UnitCost,
+                    UnitPrice = _productService.FindBy(s => s.ProductcId == productReceiveLineItem.ProductId).First().UnitPrice
+
+                };
+                productReceiveLineItemViewModels.Add(productReceiveLineItemviewModel);
+            }
+
+            ViewBag.LineItems = productReceiveLineItemViewModels;
+            MyIdentityUser user = userManager.FindById(productReceive.UserId);
+            ViewBag.UserName = user.FullName;
+            return View(productReceive);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,0 +1,113 @@
+﻿@model REERP.Models.ProductReceive
+
+@{
+    ViewBag.Title = "Print Invoice";
+    Layout = "~/Views/Shared/_MasterPage.cshtml";
+}
+
+<div class="row mg-b-7 d-print-none">
+    <div class="col-lg-8 text-right"></div>
+    <div class="col-lg-4 text-right">
+        <a class="btn btn-info btn-sm mg-r-5 printPage" href="#"> <i class="fa fa-print"> </i> Print</a>
+        <a href="@Url.Action("Index","ProductReceives")" class="btn btn-danger btn-sm"><i class="fa fa-close"> </i> Cancel</a>
+    </div>
+
+</div>
+<div class="container mg-b-5 mg-t-0 pd-t-o">
+    <div class="row mg-tb-5 text-center" style="border-bottom: solid;">
+        
+        <div class="col"><h2>Receive Invoice</h2></div>
+       
+    </div>
+</div>
+<div class="container mg-t-20 mg-b-15">
+    <div class="row">
+        <div class="col">
+            <h5>Store Keeper: @ViewBag.UserName</h5>
+        </div>
+        <div class="col text-right">
+            <h5>Invoice #: @Model.InvoiceNO</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h5>Branch: @Model.Branch.BranchName</h5>
+
+        </div>
+        <div class="col text-right">
+            <h5>Date: @Model.DateReceived.ToShortDateString()</h5>
+        </div>
+    </div>
+</div>
+
+   
+
+
+  
+
+    <div>
+        <table id="datatable1" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Unit Cost</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+
+                </tr>
+            </thead>
+            @foreach (var item in ViewBag.LineItems)
+            {
+                <tbody>
+                    <tr>
+                        <td>@item.Productname</td>
+                        <td>@item.UnitCost</td>
+                        <td class="price">@item.UnitPrice</td>
+                        <td class="quantity">@item.Quantity</td>
+                        <td class="total"></td>
+                    </tr>
+                </tbody>
+            }
+            <tfoot>
+                <tr>
+                    <td colspan="3"></td>
+                    <td class="text-right">Grand Total </td>
+                    <td id="gTotal"></td>
+                </tr>
+            </tfoot>
+        </table>
+       
+
+        
+    </div>
+
+
+
+<script>
+    $('a.printPage').click(function () {
+        window.print();
+        return false;
+    });
+
+    $(document).ready(function () {
+
+        update_amounts();
+
+    });
+    function update_amounts() {
+        var sum = 0.0;
+        $('#datatable1 > tbody  > tr').each(function () {
+            var qty = $(this).find("td").eq(3).html();
+            var price = $(this).find("td").eq(2).html();
+
+            var amount = parseFloat(qty) * parseFloat(price);
+            amount = isNaN(amount) ? 0 : amount;
+            $(this).find("td").eq(4).html(amount);
+            sum += amount;
+        });
+       
+        $("#gTotal").html(sum);
+       
+    }
+</script>
