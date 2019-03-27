@@ -41,6 +41,7 @@ namespace REERP
                 "~/Content/katniss-template/css/font-awesome.css",
                 "~/Content/katniss-template/css/ionicons.css",
                 "~/Content/katniss-template/css/perfect-scrollbar.css",
+                "~/Content/katniss-template/css/spinkit.css",
                 "~/Content/katniss-template/css/katniss.css"));
             bundles.Add(new StyleBundle("~/Content/datatable").Include(
                 "~/Content/katniss-template/lib/highlightjs/github.css",

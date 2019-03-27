@@ -71,16 +71,22 @@
                     <input type="hidden" id="productId" name="productId" />
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-group">
                     @Html.Label("Quantity", new { @class = "form-control-label" })
-                    <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity Here">
+                    <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity">
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
+                <div class="form-group">
+                    @Html.Label("Unit Price", new { @class = "form-control-label" })
+                    <input class="form-control" id="unitPrice" name="UnitPrice" type="text" placeholder="Enter Quantity">
+                </div>
+            </div>
+            <div class="col-lg-2">
                 <div class="form-group">
                     @Html.Label("Unit Cost", new { @class = "form-control-label" })
-                    <input class="form-control valid" id="price" name="UnitCost" type="text" placeholder="Enter Unit Cost Here">
+                    <input class="form-control valid" id="unitCost" name="UnitCost" type="text" placeholder="Enter Unit Cost">
 
                 </div>
             </div>
@@ -99,6 +105,7 @@
             <tr>
                 <th>Product Name</th>
                 <th>Unit Cost</th>
+                <th>Unit Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
                 <th></th>
@@ -109,8 +116,9 @@
             <tbody>
             <tr>
                 <td>@item.Productname</td>
-                <td>@item.Quantity</td>
                 <td>@item.UnitCost</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.Quantity</td>
                 <td></td>
                 <td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td>
             </tr>
@@ -192,13 +200,14 @@
 
 
         $('#addRow').on('click', function () {
-            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") {
+            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#unitPrice").val()) == "" || $.trim($("#quantity").val()) == "") {
                 alert("Please add Item");
                 return;
             }
 
             var productName = $("#txtProduct").val(),
-                price = $("#price").val(),
+                cost = $("#unitCost").val(),
+                price = $("#unitPrice").val(),
                 productId = $("#productId").val(),
                 quantity = $("#quantity").val(),
                 detailsTableBody = $("#datatable2 tbody");
@@ -211,8 +220,9 @@
             }
             t.row.add([
                 productName,
-                quantity,
+                cost,
                 price,
+                quantity,
                 (parseFloat(price) * parseInt(quantity)),
                 '<a data-itemId="0" href="#" class="deleteItem">Remove</a>'
             ]).draw(false);
@@ -273,6 +283,8 @@
             },
             select: function (e, i) {
                 $("#productId").val(i.item.val);
+                $("#unitPrice").val(i.item.price);
+                $("#unitCost").val(i.item.cost);
             },
             minLength: 0
         }).focus(function () {

@@ -990,6 +990,7 @@
     <Content Include="Content\katniss-template\css\jquery-ui.min.css" />
     <Content Include="Content\katniss-template\css\katniss.css" />
     <Content Include="Content\katniss-template\css\perfect-scrollbar.css" />
+    <Content Include="Content\katniss-template\css\spinkit.css" />
     <Content Include="Content\katniss-template\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\katniss-template\fonts\ionicons.svg" />
     <Content Include="Content\katniss-template\js\bootstrap.js" />

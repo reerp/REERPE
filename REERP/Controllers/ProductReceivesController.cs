@@ -280,7 +280,8 @@ namespace REERP.Controllers
                     ProductId = productReceiveLineItem.ProductId,
                     Productname = _productService.FindBy(s => s.ProductcId == productReceiveLineItem.ProductId).First().ProductName,
                     Quantity = productReceiveLineItem.Quantity,
-                    UnitCost = productReceiveLineItem.UnitCost
+                    UnitCost = productReceiveLineItem.UnitCost,
+                    UnitPrice = _productService.FindBy(s => s.ProductcId == productReceiveLineItem.ProductId).First().UnitPrice
 
                 };
                 productReceiveLineItemViewModels.Add(productReceiveLineItemviewModel);
