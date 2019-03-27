@@ -260,10 +260,10 @@
     <Compile Include="Security\MyIdentityDbContext.cs" />
     <Compile Include="Security\MyIdentityRole.cs" />
     <Compile Include="Security\MyIdentityUser.cs" />
-    <Compile Include="Views\Reports\ReportData.Designer.cs">
+    <Compile Include="Views\Reports\StockReportData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ReportData.xsd</DependentUpon>
+      <DependentUpon>StockReportData.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1406,6 +1406,17 @@
     <Content Include="Views\Stocks\ReportStockAllBranch.cshtml" />
     <Content Include="Views\Stocks\ReportStockByBranch.cshtml" />
     <Content Include="Views\Shared\_MasterPage.cshtml" />
+    <Content Include="Views\Reports\StockReportData.xsc">
+      <DependentUpon>StockReportData.xsd</DependentUpon>
+    </Content>
+    <None Include="Views\Reports\StockReportData.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>StockReportData.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Reports\StockReportData.xss">
+      <DependentUpon>StockReportData.xsd</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\assetss\admin\img\" />
@@ -1534,7 +1545,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Reports\ProductStatus.rdlc" />
+    <EmbeddedResource Include="Views\Reports\StockStatus.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

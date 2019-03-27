@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="ReportData" targetNamespace="http://tempuri.org/ReportData.xsd" xmlns:mstns="http://tempuri.org/ReportData.xsd" xmlns="http://tempuri.org/ReportData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="StockReportData" targetNamespace="http://tempuri.org/StockReportData.xsd" xmlns:mstns="http://tempuri.org/StockReportData.xsd" xmlns="http://tempuri.org/StockReportData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -12,7 +12,8 @@
               <DbSource ConnectionRef="REERPContext (Web.config)" DbObjectName="REERP.dbo.ProductStatus" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT BranchId, BranchName, CategoryId, CategoryName, ProductcId, ProductName, UnitOfMeasure, UnitCost, Quantity, TotalCost FROM dbo.ProductStatus</CommandText>
+                    <CommandText>SELECT        BranchId, BranchName, CategoryId, CategoryName, ProductcId, ProductName, UnitOfMeasure, UnitCost, Quantity, TotalCost
+FROM            ProductStatus</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -37,7 +38,7 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="ReportData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ReportData" msprop:Generator_UserDSName="ReportData">
+  <xs:element name="StockReportData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="StockReportData" msprop:Generator_UserDSName="StockReportData">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="ProductStatus" msprop:Generator_TableClassName="ProductStatusDataTable" msprop:Generator_TableVarName="tableProductStatus" msprop:Generator_TablePropName="ProductStatus" msprop:Generator_RowDeletingName="ProductStatusRowDeleting" msprop:Generator_RowChangingName="ProductStatusRowChanging" msprop:Generator_RowEvHandlerName="ProductStatusRowChangeEventHandler" msprop:Generator_RowDeletedName="ProductStatusRowDeleted" msprop:Generator_UserTableName="ProductStatus" msprop:Generator_RowChangedName="ProductStatusRowChanged" msprop:Generator_RowEvArgName="ProductStatusRowChangeEvent" msprop:Generator_RowClassName="ProductStatusRow">

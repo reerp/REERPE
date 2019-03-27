@@ -21,7 +21,7 @@ namespace REERP.Controllers
         private readonly IBranchService _branchService;
         private readonly ICategoryService _categoryService;
 
-        ReportData ds = new ReportData();
+        StockReportData ds = new StockReportData();
 
         public StocksController(IProductService productService,
             IBranchService branchService)
@@ -124,8 +124,8 @@ namespace REERP.Controllers
 
             adp.Fill(ds, ds.ProductStatus.TableName);
 
-            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Views\Reports\ProductStatus.rdlc";
-            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet2", ds.Tables[0]));
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Views\Reports\StockStatus.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
 
 
             ViewBag.ReportViewer = reportViewer;
