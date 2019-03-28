@@ -133,5 +133,85 @@ namespace REERP.Controllers
             return View();
         }
 
+        public ActionResult ReportStockStatusByBranch()
+        {
+            string stocksSql = @"Select Branch.BranchId,  
+                                        Branch.BranchName,
+                                        Category.CategoryId,
+                                        Category.CategoryName,
+                                        Productc.ProductcId,
+                                        Productc.ProductName,
+                                        Productc.UnitOfMeasure,
+                                        Productc.UnitCost,
+                                        Stock.Quantity,
+                                        Productc.UnitCost * Stock.Quantity As TotalCost
+                                        from Productc, Stock, Branch, Category
+                                        where Productc.ProductcId = Stock.ProductId and
+                                        Stock.BranchId = Branch.BranchId and
+                                        Productc.CategoryId = Category.CategoryId and Stock.Quantity>0";
+
+
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+
+            var connectionString = ConfigurationManager.ConnectionStrings["REERPContext"].ConnectionString;
+
+
+            SqlConnection conx = new SqlConnection(connectionString); SqlDataAdapter adp = new SqlDataAdapter(stocksSql, conx);
+
+            adp.Fill(ds, ds.ProductStatus.TableName);
+
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Views\Reports\StockStatusByBranch.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+
+
+            ViewBag.ReportViewer = reportViewer;
+
+            return View();
+        }
+
+        public ActionResult RStockByBranch()
+        {
+            string stocksSql = @"Select Branch.BranchId,  
+                                        Branch.BranchName,
+                                        Category.CategoryId,
+                                        Category.CategoryName,
+                                        Productc.ProductcId,
+                                        Productc.ProductName,
+                                        Productc.UnitOfMeasure,
+                                        Productc.UnitCost,
+                                        Stock.Quantity,
+                                        Productc.UnitCost * Stock.Quantity As TotalCost
+                                        from Productc, Stock, Branch, Category
+                                        where Productc.ProductcId = Stock.ProductId and
+                                        Stock.BranchId = Branch.BranchId and
+                                        Productc.CategoryId = Category.CategoryId and Stock.Quantity>0";
+
+
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+
+            var connectionString = ConfigurationManager.ConnectionStrings["REERPContext"].ConnectionString;
+
+
+            SqlConnection conx = new SqlConnection(connectionString); SqlDataAdapter adp = new SqlDataAdapter(stocksSql, conx);
+
+            adp.Fill(ds, ds.ProductStatus.TableName);
+
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Views\Reports\StockStatusByBranch.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", ds.Tables[0]));
+
+
+            ViewBag.ReportViewer = reportViewer;
+
+            return View();
+        }
+
     }
 }
