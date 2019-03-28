@@ -5,113 +5,118 @@
     ViewBag.Title = "Edit transfered items";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
+<style type="text/css" media="print">
+    @@page 
+        {
+            size: auto;   /* auto is the current printer page size */
+            margin: 0mm;  /* this affects the margin in the printer settings */
+        }
 
+        body 
+        {
+            background-color:#FFFFFF; 
+            
+            margin: 10px;  /* the margin on the content before printing */
+       }
+        #spacer {height: 2em;} /* height of footer + a little extra */
+ 
+</style>
 <style type="text/css" class="init">
     th {
         white-space: nowrap;
     }
+    
+}
 </style>
 <link href="~/Content/katniss-template/css/jquery-ui.min.css" rel="stylesheet" />
 @Styles.Render("~/Content/datatable")
 @Scripts.Render("~/bundles/datatable")
 <script src="/Content/katniss-template/js/jquery-ui.min.js"></script>
+<div class="container mg-b-5 mg-t-0 pd-t-o visible-print d-none d-print-block">
+    <div class="row mg-tb-5 text-center" style="border-bottom: solid;">
 
+        <div class="col"><h2>Transfer Invoice</h2></div>
+
+    </div>
+</div>
+<div class="row d-print-none">
+    <div class="col-sm-3 col-md-6">
+        <h6 class="card-body-title"></h6>
+    </div><!-- col-sm-6 -->
+    <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
+
+        <div class="actions">
+            <a class="btn btn-primary btn-block mg-b-10 btn-transfer" id="saveInvoice" href="#"><i class="fa fa-save"></i>  Save</a>
+        </div>
+
+    </div><!-- col-sm-3 -->
+    <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
+
+        <div class="actions">
+            <a class="btn btn-info btn-block mg-b-10 btn-print" id="print" href="#"><i class="fa fa-print"></i>  Print</a>
+        </div>
+
+    </div><!-- col-sm-3 -->
+    <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
+
+        <div class="actions">
+            <a class="btn btn-danger btn-block mg-b-10 btn-print" href="@Url.Action("Index","ProductTransfers")"><i class="fa fa-close"></i>  Cancel</a>
+        </div>
+
+    </div><!-- col-sm-3 -->
+</div>
 
 <div class="card pd-10 pd-sm-20">
     <div class="row">
-        <div class="col-sm-3 col-md-6">
-            <h6 class="card-body-title"></h6>
-        </div><!-- col-sm-6 -->
-        <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
-
-            <div class="actions">
-                <a class="btn btn-primary btn-block mg-b-10 btn-transfer" id="saveInvoice" href="#" ><i class="fa fa-save"></i>  Save</a>
-            </div>
-
-        </div><!-- col-sm-3 -->
-        <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
-
-            <div class="actions">
-                <a class="btn btn-info btn-block mg-b-10 btn-print" id="print" href="#"><i class="fa fa-print"></i>  Print</a>
-            </div>
-
-        </div><!-- col-sm-3 -->
-        <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
-
-            <div class="actions">
-                <a class="btn btn-danger btn-block mg-b-10 btn-print"  href="@Url.Action("Index","ProductTransfers")"><i class="fa fa-close"></i>  Cancel</a>
-            </div>
-
-        </div><!-- col-sm-3 -->
+        <div class="col">
+            <h5>Store Keeper: @Model.UserName</h5>
+            <h5>From Branch: @Model.FromBranchName</h5>
+            <h5>To Branch: @Model.ToBranchName</h5>
+        </div>
+        <div class="col text-right">
+            <h5>Date: @Model.DateTransfered.ToShortDateString()</h5>
+        </div>
     </div>
+   
 
     <p></p>
     @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
-        ;
+    @Html.AntiForgeryToken();
 
-        <div class="form-layout">
-            <div class="row mg-b-1">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, new {@class = "form-control-label"})
-                        @Html.TextBoxFor(m => m.UserName, new {@class = "form-control", @readonly = "readonly"})
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @Html.Label("From Branch", new {@class = "form-control-label"})
-                        @Html.TextBoxFor(m => m.FromBranchName, new {@class = "form-control", @readonly = "readonly"})
-                        @*                    @Html.DropDownListFor(m => m.FromBranchId, ViewBag.FromBranchList as SelectList, new {@class = "form-control", @id = "fromBranchId"})*@
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @Html.Label("To Branch", new {@class = "form-control-label"})
-                        @Html.TextBoxFor(m => m.ToBranchName, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.DateTransfered, new {@class = "form-control-label"})
-                        @Html.TextBoxFor(m => m.DateTransfered, new {@class = "form-control", @readonly = "readonly"})
-                    </div>
-                </div>
-            </div><!--row mg-b-1-->
-        </div>
-        <!--form-layout-->
-        <div class="form-layout">
-            <div class="row mg-b-1">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        @Html.Label("Product", new { @class = "form-control-label" })
-                        <input type="text" id="txtProduct" name="Product" class="form-control" placeholder="Select Product" />
-                        <input type="hidden" id="txtProductId" name="ProductId" />
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @Html.Label("Quantity", new { @class = "form-control-label" })
-                        <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity Here">
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @Html.Label("Unit Cost", new { @class = "form-control-label" })
-                        <input class="form-control valid" id="price" name="UnitCost" type="text" placeholder="Enter Unit Cost Here">
-
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-
-                        <label class="form-control-label"></label>
-                        <a id="addRow" class="btn btn-primary btn-block mg-b-10 mg-t-5 btn-add-item" href="#"><i class="fa fa-plus"></i>  Add Item</a>
-                    </div>
+   
+    <!--form-layout-->
+    <div class="form-layout d-print-none">
+        <div class="row mg-b-1">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("Product", new { @class = "form-control-label" })
+                    <input type="text" id="txtProduct" name="Product" class="form-control" placeholder="Select Product" />
+                    <input type="hidden" id="txtProductId" name="ProductId" />
                 </div>
             </div>
-        </div><!--form-layout-->
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Quantity", new { @class = "form-control-label" })
+                    <input class="form-control" id="quantity" name="Quantity" type="text" placeholder="Enter Quantity Here">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    @Html.Label("Unit Cost", new { @class = "form-control-label" })
+                    <input class="form-control valid" id="unitCost" name="UnitCost" type="text" placeholder="Enter Unit Cost Here">
+
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+
+                    <label class="form-control-label"></label>
+                    <a id="addRow" class="btn btn-primary btn-block mg-b-10 mg-t-5 btn-add-item" href="#"><i class="fa fa-plus"></i>  Add Item</a>
+                </div>
+            </div>
+        </div>
+    </div><!--form-layout-->
     }
 </div>
 <div class="card pd-10 pd-sm-20">
@@ -120,24 +125,26 @@
             <thead>
                 <tr>
                     <th>Product Name</th>
-
+                    <th>Unit Cost</th>
                     <th>Quantity</th>
-
-                    <th></th>
+                    <th>Total</th>
+                    <th class="d-print-none"></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (ProductTransferLineItemViewModel item in ViewBag.ProductTransferLineItemViewModels)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Productname)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Productname)
+                    </td>
+                    <td> @Html.DisplayFor(modelItem => item.UnitCost)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td></td>
+                    <td class="d-print-none"><a data-itemId="0" href="#" class="deleteItem">Remove</a></td>
+                </tr>
                 }
             </tbody>
             <tfoot>
@@ -149,31 +156,112 @@
         </table>
     </div>
 </div><!--card pd-10 pd-sm-20 table-->
+<div id="footer">
+    PAGE FOOTER
+</div>
 
-@section scripts{
-    @Scripts.Render("~/bundles/datatable")
-}
 <script>
     var productTransfer = [];
-    $('#datatable1').DataTable({
-        bLengthChange: false,
-        searching: false,
-        responsive: true
+    $(document).ready(function () {
+
+        update_amounts();
+        $("#datatable1_paginate").addClass("d-print-none");
+        $(".dataTables_info").addClass("d-print-none");
+
     });
-   
-       
+    function update_amounts() {
+        
+        $('#datatable1 > tbody  > tr').each(function () {
+            var qty = $(this).find("td").eq(2).html();
+            var price = $(this).find("td").eq(1).html();
+            var amount = parseFloat(qty) * parseFloat(price);
+            amount = isNaN(amount) ? 0 : amount;
+            $(this).find("td").eq(3).html(amount);
+           
+        });
+
+
+    }
+    $.fn.dataTable.Api.register('hasValue()',
+        function (value) {
+            return this
+                .data()
+                .toArray()
+                .toString()
+                .toLowerCase()
+                .split(',')
+                .indexOf(value.toString().toLowerCase()) >
+                -1;
+        });
+    $(document).ready(function () {
+
+        var t = $('#datatable1').DataTable({
+            dom: 'Bfrtip',
+            "pageLength": 20,
+            "paging": false,
+            "info": false,
+            buttons: [
+
+                {
+                    extend: 'print',
+                    footer: true,
+                    messageTop: $('#head').html()
+                }
+            ],
+            "columnDefs": [{
+                "targets": 3,
+                "orderable": false
+            }],
+            bLengthChange: false,
+            searching: false,
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                    .column(3)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Total over this page
+                pageTotal = api
+                    .column(3, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(3).footer()).html(
+                    '$' + pageTotal + ' ( $' + total + ' total)'
+                );
+
+            }
+        });
+        var counter = 1;
+
 
 
         $('#addRow').on('click', function () {
-            if ($.trim($("#txtProduct").val()) == "" ||  $.trim($("#quantity").val()) == "") {
+            if ($.trim($("#txtProduct").val()) == "" || $.trim($("#unitCost").val()) == "" || $.trim($("#quantity").val()) == "") {
                 alert("Please add Item");
                 return;
             }
 
             var productName = $("#txtProduct").val(),
-               // price = $("#price").val(),
+                cost = $("#unitCost").val(),
+                productId = $("#productId").val(),
                 quantity = $("#quantity").val(),
-                productId = $("#txtProductId").val(),
                 detailsTableBody = $("#datatable1 tbody");
 
             if (t.hasValue(productName)) {
@@ -183,30 +271,30 @@
             }
             t.row.add([
                 productName,
+                cost,
                 quantity,
-                price,
-                (parseFloat(price) * parseInt(quantity)),
+                (parseFloat(cost) * parseInt(quantity)),
                 '<a data-itemId="0" href="#" class="deleteItem">Remove</a>'
             ]).draw(false);
 
-            productTransfer.push({
+            clearItem();
+
+            productReceives.push({
                 ProductId: productId,
                 Quantity: quantity,
-                UnitCost: price
+                UnitCost: cost
             });
 
-            clearItem();
         });
 
         // Automatically add a first row of data
         //$('#addRow').click();
         //After Adding an item In The List, Clear Clean The Form For to Add More.
         function clearItem() {
-            //$("#productName").val('');
             $("#txtProduct").val('');
-            $("#price").val('');
+            $("#unitCost").val('');
             $("#quantity").val('');
-            $("#txtProductId").val('');
+            $("#productId").val('');
         }
         // After Add an item In The List, If You Want, You Can Remove It.
         $(document).on('click', 'a.deleteItem', function (e) {
@@ -221,7 +309,8 @@
             }
         });
 
-  
+    });
+
     $(function () {
         $("#txtProduct").autocomplete({
             source: function (request, response) {
@@ -252,6 +341,7 @@
             $(this).autocomplete("search");
         });
     });
+
     $("#print").click(function () {
         print();
     });
