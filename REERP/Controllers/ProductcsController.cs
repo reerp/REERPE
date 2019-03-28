@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using REERP.Models;
+using REERP.Product.Services;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using REERP.Models;
-using REERP.Product.Services;
 
 namespace REERP.Controllers
 {
@@ -59,7 +54,7 @@ namespace REERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_productService.AddProduct(productc))
+                if (_productService.AddProduct(productc))
                     return RedirectToAction("Index");
             }
 
@@ -74,7 +69,7 @@ namespace REERP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Productc productc =_productService.FindById(id.Value);
+            Productc productc = _productService.FindById(id.Value);
             if (productc == null)
             {
                 return HttpNotFound();
@@ -92,7 +87,7 @@ namespace REERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_productService.EditProduct(productc))
+                if (_productService.EditProduct(productc))
                     return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(_categoryService.GetAllCategories(), "CategoryId", "CategoryName", productc.CategoryId);
@@ -117,6 +112,11 @@ namespace REERP.Controllers
             return RedirectToAction("Index");
         }
 
+        // Blank Inventory Form
+        public ActionResult Inventory()
+        {
+            return View(_productService.GetAllProducts().ToList());
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
