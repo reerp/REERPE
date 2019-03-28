@@ -229,6 +229,7 @@ namespace REERP.Controllers
                 DateTransfered = productTransfer.DateTransfered,
                 UserId = productTransfer.UserId,
                 UserName = userManager.FindById(productTransfer.UserId).FullName
+
             };
 
 
@@ -242,6 +243,7 @@ namespace REERP.Controllers
                     ProductId = productTransferLineItem.ProductId,
                     Productname = _productService.FindBy(s => s.ProductcId == productTransferLineItem.ProductId).First().ProductName,
                     Quantity = productTransferLineItem.Quantity,
+                    UnitCost = _productService.FindBy(p => p.ProductcId == productTransferLineItem.ProductId).First().UnitCost
                 };
                 productTransferLineItemViewModels.Add(productTransferLineItemviewModel);
             }

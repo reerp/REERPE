@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace REERP.Models.ViewModels
 {
@@ -15,6 +12,8 @@ namespace REERP.Models.ViewModels
         public string Productname { get; set; }
         [Required]
         public decimal Quantity { get; set; }
+        [DisplayName("Unit Cost")]
+        public decimal UnitCost { get; set; }
 
         public int ProductTransferId { get; set; }
         public ProductTransfer ProductTransfer { get; set; }
