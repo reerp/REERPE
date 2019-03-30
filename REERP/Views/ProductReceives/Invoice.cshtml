@@ -4,6 +4,40 @@
     ViewBag.Title = "Print Invoice";
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
+<style type="text/css" media="print">
+    @@page 
+    {
+        size: auto;   /* auto is the current printer page size */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+
+    body 
+    {
+        background-color:#FFFFFF;            
+        margin: 10px;  /* the margin on the content before printing */
+    }
+    
+
+
+    .footer {
+       
+        bottom: 0;
+        width: 100%;
+        height: 150px; /* Set the fixed height of the footer here */
+        line-height: 60px; /* Vertically center the text there */
+        background-color: #f5f5f5;
+    }
+    
+    
+</style>
+<style>
+    input[type="text"] {
+        border: 0;
+        outline: 0;
+        background: transparent;
+        border-bottom: 1px solid #000000;
+    }
+</style>
 
 <div class="row mg-b-7 d-print-none">
     <div class="col-lg-8 text-right"></div>
@@ -13,39 +47,32 @@
     </div>
 
 </div>
-<div class="container mg-b-5 mg-t-0 pd-t-o">
-    <div class="row mg-tb-5 text-center" style="border-bottom: solid;">
-        
-        <div class="col"><h2>Receive Invoice</h2></div>
-       
-    </div>
-</div>
-<div class="container mg-t-20 mg-b-15">
-    <div class="row">
-        <div class="col">
-            <h5>Store Keeper: @ViewBag.UserName</h5>
-        </div>
-        <div class="col text-right">
-            <h5>Invoice #: @Model.InvoiceNO</h5>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h5>Branch: @Model.Branch.BranchName</h5>
-
-        </div>
-        <div class="col text-right">
-            <h5>Date: @Model.DateReceived.ToShortDateString()</h5>
-        </div>
-    </div>
-</div>
-
-   
 
 
-  
 
     <div>
+
+        <div class="row mg-b-5 mg-t-0 pd-0 text-center" style="border-bottom: solid;margin-left: 0px;margin-right: 0px;">
+            <div class="col"><h2>Receive Invoice</h2></div>
+        </div>
+        <div class="row mg-t-20">
+            <div class="col">
+                <h5>Store Keeper: @ViewBag.UserName</h5>
+            </div>
+            <div class="col text-right">
+                <h5>Invoice #: @Model.InvoiceNO</h5>
+            </div>
+        </div>
+        <div class="row mg-b-15">
+            <div class="col">
+                <h5>Branch: @Model.Branch.BranchName</h5>
+
+            </div>
+            <div class="col text-right">
+                <h5>Date: @Model.DateReceived.ToShortDateString()</h5>
+            </div>
+        </div>
+
         <table id="datatable1" class="table table-bordered">
             <thead>
                 <tr>
@@ -58,17 +85,17 @@
                 </tr>
             </thead>
             @foreach (var item in ViewBag.LineItems)
-            {
-                <tbody>
-                    <tr>
-                        <td>@item.Productname</td>
-                        <td>@item.UnitCost</td>
-                        <td class="price">@item.UnitPrice</td>
-                        <td class="quantity">@item.Quantity</td>
-                        <td class="total"></td>
-                    </tr>
-                </tbody>
-            }
+        {
+        <tbody>
+            <tr>
+                <td>@item.Productname</td>
+                <td>@item.UnitCost</td>
+                <td class="price">@item.UnitPrice</td>
+                <td class="quantity">@item.Quantity</td>
+                <td class="total"></td>
+            </tr>
+        </tbody>
+        }
             <tfoot>
                 <tr>
                     <td colspan="3"></td>
@@ -77,14 +104,33 @@
                 </tr>
             </tfoot>
         </table>
-       
 
-        
+
+
     </div>
+   
+    <footer class="footer d-none d-print-block" style="page-break-before: always;margin-top: 20px">
+        <div class="container">
+            <form>
+                <div class="form-row">
+                    <div class="col-4">
+                        <label>Name:</label><br/>
+                        <input type="text"><br />
+                        <input type="text">
+                    </div>
+                    
+                    <div class="col-4 offset1">
+                        <label>Signature</label><br />
+                        <input type="text"><br />
+                        <input type="text">
+                    </div>
+                </div>
+              
+            </form>
+        </div>
+    </footer>
 
-
-
-<script>
+    <script>
     $('a.printPage').click(function () {
         window.print();
         return false;
@@ -106,8 +152,8 @@
             $(this).find("td").eq(4).html(amount);
             sum += amount;
         });
-       
+
         $("#gTotal").html(sum);
-       
+
     }
-</script>
+    </script>

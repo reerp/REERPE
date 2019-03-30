@@ -160,73 +160,7 @@
     </div>
     <div class="col-6">
         <div class="card bd-0">
-            <div class="card-header card-header-default bg-primary">
-                Items returned
-            </div><!-- card-header -->
-            <div class="card-body bd bd-t-0 rounded-bottom">
-                <div class="table-responsive" style="overflow:visible !important;">
-                    <table id="datatable4" class="table display responsive nowrap" style="width: 98%;">
-                        <thead>
-                        <tr>
-                            <th>
-                                ReferenceNo
-                            </th>
-                            <th>
-                                Customer Name
-                            </th>
-                            <th>
-                                Branch Name
-                            </th>
-                            <th>
-                                SalesType
-                            </th>
-                            <th>
-                                Sales Person
-                            </th>
-                            <th>
-                                Date Sold
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (REERP.Models.ViewModels.SalesInvoiceViewModel item in ViewBag.ReturnedSales)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ReferenceNo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CustomerName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BranchName)
-                                </td>
-                                <td>
-                                    @if (item.SalesType == 0)
-                                    {
-                                        <div>Credit</div>
-                                    }
-                                    else
-                                    {
-                                        <div>Cash</div>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UserName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DateSold)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
-                                </td>
-                            </tr>
-                                  
-                        }
-                        </tbody>
-                    </table>
-                </div>
-            </div><!-- card-body -->
+         
         </div><!-- card -->
     </div>
 </div>
