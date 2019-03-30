@@ -43,13 +43,13 @@ namespace REERP.Store.Services
         void AddLineItemStock(ProductReceiveLineItem item, int branchId)
         {
             var stock = _unitOfWork.StockRepository.FindBy(x => x.BranchId == branchId
-                                                                && x.ProductId == item.ProductId).SingleOrDefault();
+                                                                && x.ProductcId == item.ProductId).SingleOrDefault();
             if (stock == null)
             {
                 stock = new Stock()
                 {
                     BranchId = branchId,
-                    ProductId = item.ProductId,
+                    ProductcId = item.ProductId,
                     Quantity = item.Quantity,
                 };
                 _unitOfWork.StockRepository.Add(stock);
@@ -77,7 +77,7 @@ namespace REERP.Store.Services
         void SubtractLineItemStock(ProductReceiveLineItem item, int branchId)
         {
             var stock = _unitOfWork.StockRepository.FindBy(x => x.BranchId == branchId
-                                                                && x.ProductId == item.ProductId).SingleOrDefault();
+                                                                && x.ProductcId == item.ProductId).SingleOrDefault();
             stock.Quantity = stock.Quantity - item.Quantity;
             _unitOfWork.StockRepository.Edit(stock);
 

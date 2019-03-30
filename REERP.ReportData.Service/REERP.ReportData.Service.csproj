@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{12C866FD-7E2A-41E0-8D1E-856E2C847702}</ProjectGuid>
+    <ProjectGuid>{79D4485A-C076-4702-AEFB-B2A9CE169C8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>REERP.Models</RootNamespace>
-    <AssemblyName>REERP.Models</AssemblyName>
+    <RootNamespace>REERP.ReportData.Service</RootNamespace>
+    <AssemblyName>REERP.ReportData.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,21 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs" />
-    <Compile Include="Branch.cs" />
-    <Compile Include="Category.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Productc.cs" />
-    <Compile Include="ProductReceive.cs" />
-    <Compile Include="ProductReceiveLineItem.cs" />
-    <Compile Include="ProductTransfer.cs" />
-    <Compile Include="ProductTransferLineItem.cs" />
-    <Compile Include="ReportModel\StockViewModel.cs" />
-    <Compile Include="SalesInvoice.cs" />
-    <Compile Include="Mapping\AddressMap.cs" />
+    <Compile Include="IStockReportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SalesLineItem.cs" />
-    <Compile Include="Stock.cs" />
+    <Compile Include="StockReportService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\REERP.DAL\REERP.DAL.csproj">
+      <Project>{9621e6a5-68dd-45cb-9978-0945edce09f8}</Project>
+      <Name>REERP.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\REERP.Models\REERP.Models.csproj">
+      <Project>{12c866fd-7e2a-41e0-8d1e-856e2c847702}</Project>
+      <Name>REERP.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

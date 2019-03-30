@@ -10,10 +10,10 @@ namespace REERP.Models
     {
         public int StockId { get; set; }
         public int BranchId { get; set; }
-        public string ProductId { get; set; }
+        public string ProductcId { get; set; }
         public Decimal Quantity { get; set; }
 
-        public virtual Productc Product { get; set; }
+        public virtual Productc Productc { get; set; }
 
         public virtual Branch Branch { get; set; }
     }

@@ -51,7 +51,7 @@ namespace REERP.Sales.Services
         void AddLineItemStock(SalesLineItem item, int branchId)
         {
             var stock = _unitOfWork.StockRepository.FindBy(x => x.BranchId == branchId
-                                                                && x.ProductId == item.ProductId).SingleOrDefault();
+                                                                && x.ProductcId == item.ProductId).SingleOrDefault();
 
                 stock.Quantity = stock.Quantity + item.Quantity;
                 _unitOfWork.StockRepository.Edit(stock);
@@ -61,7 +61,7 @@ namespace REERP.Sales.Services
         void SubtractLineItemStock(SalesLineItem item, int branchId)
         {
             var stock = _unitOfWork.StockRepository.FindBy(x => x.BranchId == branchId
-                                                                && x.ProductId == item.ProductId).SingleOrDefault();
+                                                                && x.ProductcId == item.ProductId).SingleOrDefault();
             stock.Quantity = stock.Quantity - item.Quantity;
             _unitOfWork.StockRepository.Edit(stock);
 
@@ -129,7 +129,7 @@ namespace REERP.Sales.Services
         public bool IsAvailable(string productId, int branchId, decimal quantity)
         {
             var stock = _unitOfWork.StockRepository.FindBy(x => x.BranchId == branchId
-                                                                && x.ProductId == productId).SingleOrDefault();
+                                                                && x.ProductcId == productId).SingleOrDefault();
             if (stock == null) return false;
 
             if (quantity > stock.Quantity)

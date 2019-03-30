@@ -40,7 +40,7 @@ namespace REERP.Controllers
                 reportModel.ProductId = product.ProductcId;
                 reportModel.ProductName = product.ProductName;
                 reportModel.UnitCost = product.UnitCost;
-                reportModel.QuantityOnHand = _productService.GetStock().Where(e => e.ProductId == product.ProductcId).Sum(e=>e.Quantity);
+                reportModel.QuantityOnHand = _productService.GetStock().Where(e => e.ProductcId == product.ProductcId).Sum(e=>e.Quantity);
                 stocks.Add(reportModel);                            
             }
             return View(stocks);
@@ -62,7 +62,7 @@ namespace REERP.Controllers
                 reportModel.ProductId = product.ProductcId;
                 reportModel.ProductName = product.ProductName;
                 reportModel.UnitCost = product.UnitCost;
-                 Stock s=_productService.GetStock().Where(e => e.ProductId == product.ProductcId
+                 Stock s=_productService.GetStock().Where(e => e.ProductcId == product.ProductcId
                                                 && e.BranchId == branchId).FirstOrDefault();
                 if (s == null)
                     reportModel.QuantityOnHand = 0;

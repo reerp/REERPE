@@ -236,6 +236,7 @@
     <Compile Include="Controllers\ProductcsController.cs" />
     <Compile Include="Controllers\ProductReceivesController.cs" />
     <Compile Include="Controllers\ProductTransferController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SalesInvoicesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1420,6 +1421,7 @@
       <DependentUpon>StockReportData.xsd</DependentUpon>
     </Content>
     <Content Include="Views\Stocks\ReportStockStatusByBranch.cshtml" />
+    <Content Include="Views\Reports\StockStatusAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\assetss\admin\img\" />
@@ -1531,6 +1533,10 @@
     <ProjectReference Include="..\REERP.Product.Services\REERP.Product.Services.csproj">
       <Project>{c6fcb914-1c3f-4ba6-9dc6-37b68b221543}</Project>
       <Name>REERP.Product.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\REERP.ReportData.Service\REERP.ReportData.Service.csproj">
+      <Project>{79d4485a-c076-4702-aefb-b2a9ce169c8c}</Project>
+      <Name>REERP.ReportData.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\REERP.Sales.Services\REERP.Sales.Services.csproj">
       <Project>{14a2c9f7-4b0f-4c38-8d54-7440cd081872}</Project>
