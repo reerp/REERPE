@@ -52,7 +52,9 @@ namespace REERP.Infrastructure
 
             kernel.Bind<REERP.Store.Services.IProductTransferService>().To<REERP.Store.Services.ProductTransferService>();
 
-           kernel.Bind<REERP.DAL.UnitOfWork.IUnitOfWork>().To<REERP.DAL.UnitOfWork.UnitOfWork>();
+            kernel.Bind<REERP.ReportData.Service.IStockReportService>().To<REERP.ReportData.Service.StockReportService>();
+
+            kernel.Bind<REERP.DAL.UnitOfWork.IUnitOfWork>().To<REERP.DAL.UnitOfWork.UnitOfWork>();
         }
     }
 }

@@ -60,8 +60,8 @@ namespace REERP.DAL
 
             var stocks = new List<Stock>
             {
-                new Stock { BranchId=1,ProductId="001", Quantity=5},
-                new Stock {BranchId=1,ProductId="002", Quantity=3}
+                new Stock { BranchId=1,ProductcId="001", Quantity=5},
+                new Stock {BranchId=1,ProductcId="002", Quantity=3}
             };
             stocks.ForEach(s => context.Stocks.Add(s));
             context.SaveChanges();
