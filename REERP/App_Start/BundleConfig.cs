@@ -21,7 +21,10 @@ namespace REERP
                 "~/Content/katniss-template/js/katniss.js"));
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
                 "~/Content/katniss-template/lib/highlightjs/highlight.pack.js",
-                "~/Content/katniss-template/lib/datatables/jquery.dataTables.js",
+                "~/Content/katniss-template/lib/datatables/js/jquery.dataTables.min.js",
+                "~/Content/katniss-template/lib/datatables/js/buttons.print.min.js",
+                "~/Content/katniss-template/lib/datatables/js/dataTables.buttons.min.js",
+                "~/Content/katniss-template/lib/datatables/js/dataTables.rowGroup.min.js",
                 "~/Content/katniss-template/lib/select2/select2.min.js",
                 "~/Content/katniss-template/lib/datatables-responsive/dataTables.responsive.js"));
 
@@ -45,7 +48,9 @@ namespace REERP
                 "~/Content/katniss-template/css/katniss.css"));
             bundles.Add(new StyleBundle("~/Content/datatable").Include(
                 "~/Content/katniss-template/lib/highlightjs/github.css",
-                "~/Content/katniss-template/lib/datatables/jquery.dataTables.css",
+                "~/Content/katniss-template/lib/datatables/jquery.dataTables.min.css",
+                "~/Content/katniss-template/lib/datatables/buttons.dataTables.min.css",
+                "~/Content/katniss-template/lib/datatables/rowGroup.dataTables.min.css",
                 "~/Content/katniss-template/lib/select2/select2.min.css"));
         }
     }

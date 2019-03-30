@@ -5,14 +5,9 @@
     Layout = "~/Views/Shared/_MasterPage.cshtml";
 }
 
-<link href="~/Content/katniss-template/css/jquery-ui.min.css" rel="stylesheet" />
+
 @Styles.Render("~/Content/datatable")
 @Scripts.Render("~/bundles/datatable")
-<script src="/Content/katniss-template/js/jquery-ui.min.js"></script>
-
-
-
-
 
 <table id="example" class="table table-striped table-bordered " style="width:100%">
     <thead>
@@ -44,45 +39,15 @@
 
 <script>
     $(document).ready(function () {
-
         $('#example').DataTable({
+            dom: 'Bfrtip',
             buttons: [
                 {
-                    extend: 'print',
-                    text: 'Print current page',
-                    exportOptions: {
-                        modifier: {
-                            page: 'current'
-                        }
-                    }
+                extend: 'print',
+                messageTop: 'All products in stock.'
                 }
-            ]
+            ],
+            searching: false
         });
-        //$('#example').DataTable({
-        //    "searching": false,
-        //    order: [[2, 'asc']],
-        //    rowGroup: {
-        //        dataSrc: 2
-        //    }
-        //});
-
-        //$('#example').DataTable({
-        //    dom: 'Bfrtip',
-        //    buttons: [
-        //        'print'
-        //    ]
-        //});
-
-        // Change the fixed ordering when the data source is updated
-        //table.on('rowgroup-datasrc', function (e, dt, val) {
-        //    table.order.fixed({ pre: [[val, 'asc']] }).draw();
-        //});
-
-        //$('a.group-by').on('click', function (e) {
-        //    e.preventDefault();
-
-        //    table.rowGroup().dataSrc($(this).data('column'));
-        //});
-
     });
 </script>
