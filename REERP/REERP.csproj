@@ -1431,6 +1431,7 @@
     </Content>
     <Content Include="Views\Stocks\ReportStockStatusByBranch.cshtml" />
     <Content Include="Views\Reports\StockStatusAll.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\assetss\admin\img\" />
