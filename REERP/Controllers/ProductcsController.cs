@@ -3,6 +3,7 @@ using REERP.Product.Services;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace REERP.Controllers
 {
@@ -63,13 +64,13 @@ namespace REERP.Controllers
         }
 
         // GET: Productcs/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (id.IsEmpty())
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Productc productc = _productService.FindById(id.Value);
+            Productc productc = _productService.FindBy(x => x.ProductcId == id).SingleOrDefault();
             if (productc == null)
             {
                 return HttpNotFound();

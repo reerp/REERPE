@@ -102,29 +102,38 @@
     <div>
         <table id="datatable1" class="display">
             <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Unit Cost</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Unit Cost</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
             </thead>
-            @foreach (var item in ViewBag.LineItem)
-            {
             <tbody>
-            <tr>
-                <td>@item.Productname</td>
-                <td>@item.UnitCost</td>
-                <td>@item.UnitPrice</td>
-                <td>@item.Quantity</td>
-                <td></td>
-                <td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td>
-            </tr>
-            </tbody>  
+                @foreach (var item in ViewBag.LineItem)
+                {
+
+                    <tr>
+                        <td>@item.Productname</td>
+                        <td>@item.UnitCost</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.Quantity</td>
+                        <td></td>
+                        <td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td>
+                    </tr>
+
                 }
-</table>
+                <tr style="font-weight: 700;font-size: 12px;text-transform: uppercase;background-color: #dee2e6;color: #000;letter-spacing: 0.5px;">
+                    <td colspan="3"></td>
+                    <td class="text-right">Grand Total </td>
+                    <td id="gTotal"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
 }
 
@@ -144,7 +153,7 @@
                 -1;
         });
     $(document).ready(function () {
-
+        update_amounts();
         var t = $('#datatable1').DataTable({
             dom: 'Bfrtip',
             buttons: [
@@ -291,4 +300,19 @@
             $(this).autocomplete("search");
         });
     });
+    function update_amounts() {
+        var sum = 0.0;
+        $('#datatable1 > tbody  > tr').each(function () {
+            var qty = $(this).find("td").eq(3).html();
+            var price = $(this).find("td").eq(2).html();
+
+            var amount = parseFloat(qty) * parseFloat(price);
+            amount = isNaN(amount) ? 0 : amount;
+            $(this).find("td").eq(4).html(amount);
+            sum += amount;
+        });
+
+        $("#gTotal").html(sum);
+
+    }
 </script>

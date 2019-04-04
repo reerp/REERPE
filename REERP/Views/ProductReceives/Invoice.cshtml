@@ -75,34 +75,36 @@
 
         <table id="datatable1" class="table table-bordered">
             <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Unit Cost</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-
-                </tr>
-            </thead>
-            @foreach (var item in ViewBag.LineItems)
-        {
-        <tbody>
             <tr>
-                <td>@item.Productname</td>
-                <td>@item.UnitCost</td>
-                <td class="price">@item.UnitPrice</td>
-                <td class="quantity">@item.Quantity</td>
-                <td class="total"></td>
+                <th>Product Name</th>
+                <th>Unit Cost</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+
             </tr>
-        </tbody>
-        }
-            <tfoot>
-                <tr>
-                    <td colspan="3"></td>
-                    <td class="text-right">Grand Total </td>
-                    <td id="gTotal"></td>
-                </tr>
-            </tfoot>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.LineItems)
+                {
+
+                    <tr>
+                        <td>@item.Productname</td>
+                        <td>@item.UnitCost</td>
+                        <td class="price">@item.UnitPrice</td>
+                        <td class="quantity">@item.Quantity</td>
+                        <td class="total"></td>
+                    </tr>
+
+                }
+            <tr style="font-weight: 700;font-size: 12px;text-transform: uppercase;background-color: #dee2e6;color: #000;letter-spacing: 0.5px;">
+                <td colspan="3"></td>
+                <td class="text-right">Grand Total </td>
+                <td id="gTotal"></td>
+            </tr>
+            </tbody>
+
+            
         </table>
 
 
