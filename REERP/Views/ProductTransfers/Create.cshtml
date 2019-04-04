@@ -14,6 +14,54 @@
 @Scripts.Render("~/bundles/datatable")
 <script src="/Content/katniss-template/js/jquery-ui.min.js"></script>
 
+<!--Alert Status-->
+<div class="alert alert-primary alert-bordered pd-y-20" style="display: none;" id="savingStarted" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-flex align-items-center justify-content-center">
+        <i class="icon ion-ios-information alert-icon tx-52 tx-info mg-r-20"></i>
+        <div>
+            <h5 class="mg-b-2 tx-info">Saving started</h5>
+
+            <div class="sk-wave" style="margin: 2px auto;width: 90px;height: 25px;">
+                <div class="sk-rect sk-rect1 bg-gray-400"></div>
+                <div class="sk-rect sk-rect2 bg-gray-400"></div>
+                <div class="sk-rect sk-rect2 bg-gray-800"></div>
+                <div class="sk-rect sk-rect3 bg-gray-400"></div>
+                <div class="sk-rect sk-rect4 bg-gray-800"></div>
+                <div class="sk-rect sk-rect5 bg-gray-400"></div>
+                <div class="sk-rect sk-rect4 bg-gray-800"></div>
+            </div>
+        </div>
+    </div><!-- d-flex -->
+</div><!-- alert -->
+<div class="alert alert-success pd-y-20" style="display: none" id="savedSuccess" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-sm-flex align-items-center justify-content-start">
+        <i class="icon ion-ios-checkmark alert-icon tx-52 mg-r-20 tx-success"></i>
+        <div class="mg-t-20 mg-sm-t-0">
+            <h5 class="mg-b-2 tx-success">Successfully saved !!</h5>
+        </div>
+    </div><!-- d-flex -->
+</div><!-- alert -->
+
+<div class="alert alert-danger pd-y-20 mg-b-0" style="display: none;" id="saveError" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-sm-flex align-items-center justify-content-start">
+        <i class="icon ion-ios-close alert-icon tx-52 tx-danger mg-r-20"></i>
+        <div class="mg-t-20 mg-sm-t-0">
+            <h5 class="mg-b-2 tx-danger">Oh snap! Error </h5>
+            <p class="mg-b-0 tx-gray">Change a few things up and try submitting again....</p>
+        </div>
+    </div><!-- d-flex -->
+</div><!-- alert -->
+
+<!-- End Alert Status -->
 <div class="card pd-10 pd-sm-20">
     <div class="row">
         <div class="col-sm-3 col-md-6">
@@ -21,18 +69,17 @@
         </div><!-- col-sm-6 -->
         <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
-            <div class="actions">
-                <a class="btn btn-primary btn-block mg-b-10 btn-transfer" id="saveInvoice" href="#" ><i class="fa fa-save"></i>  Save</a>
-            </div>
+
 
         </div><!-- col-sm-3 -->
         <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
             <div class="actions">
-                <a class="btn btn-dark btn-block mg-b-10 btn-print" id="print" href="#"><i class="fa fa-print"></i>  Print</a>
+                <a class="btn btn-primary btn-block mg-b-10 btn-transfer" id="saveInvoice" href="#" ><i class="fa fa-save"></i>  Save</a>
             </div>
 
         </div><!-- col-sm-3 -->
+        
         <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
             <div class="actions">
@@ -197,6 +244,7 @@
         $('#addRow').on('click', function () {
             if ($.trim($("#txtProduct").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") {
                 alert("Please add Item");
+                clearItem();
                 return;
             }
 
@@ -276,6 +324,7 @@
             },
             select: function (e, i) {
                 $("#txtProductId").val(i.item.val);
+                $("#price").val(i.item.cost);
             },
             minLength: 0
         }).focus(function () {
@@ -288,7 +337,8 @@
 
     //Save button click function
     $('a#saveInvoice').click(function () {
-        alert("save started");
+       
+        $("#savingStarted").show();
         var isAllValid = true;
         if (productTransfer.length == 0) {
             $('#datatable1').html('<span style="color:red;">Please add order items</span>');
@@ -317,17 +367,21 @@
                     //check is successfully save to database 
                     if (d.status == true) {
                         //will send status from server side
-                        alert('Successfully saved.');
+                        $("#savingStarted").hide();
+                        $("#savedSuccess").show();
                         //clear form
                         productTansfer = [];
                     }
                     else {
-                        alert('Failed');
+                        $("#savingStarted").hide();
+                        $("#saveError").show();
                     }
                     $('#saveInvoice').val('Save');
                 },
                 error: function () {
-                    alert('Error. Please try again.');
+                    $("#savingStarted").hide();
+                    $("#savedSuccess").hide();
+                    $("#saveError").show();
                     $('#saveInvoice').val('Save');
                 }
             });

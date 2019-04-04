@@ -51,10 +51,10 @@
     </div><!-- col-sm-3 -->
     <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
-        <div class="actions">
-            <a class="btn btn-info btn-block mg-b-10 btn-print" id="print" href="#"><i class="fa fa-print"></i>  Print</a>
+        <div class="actions" id="printPage">
+            @*<a class="btn btn-info btn-block mg-b-10 btn-print" id="print" href="#"><i class="fa fa-print"></i>  Print</a>*@
         </div>
-
+       
     </div><!-- col-sm-3 -->
     <div class="col-sm-3 col-md-2 mg-t-20 mg-sm-t-0">
 
@@ -66,7 +66,7 @@
 </div>
 
 <div class="card pd-10 pd-sm-20">
-    <div class="row">
+    <div class="row printHead">
         <div class="col">
             <h5>Store Keeper: @Model.UserName</h5>
             <h5>From Branch: @Model.FromBranchName</h5>
@@ -155,56 +155,73 @@
         </table>
     </div>
 </div><!--card pd-10 pd-sm-20 table-->
-<div id="footer">
-    PAGE FOOTER
+
+<div class="row d-none d-print-block" style="margin-top:25px;margin-left:20px" id="pageFooter">
+    <table class="display" style="width:60%">
+        <thead>
+            <tr style="text-align:left">
+                <th>Name</th>
+                <th>&nbsp;</th>
+                <th>Signature</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border-bottom: 2px solid black;line-height: 3">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td style="border-bottom: 2px solid black;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 2px solid black;line-height: 3">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td style="border-bottom: 2px solid black;">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <script>
     var productTransfer = [];
     $(document).ready(function () {
-
+        //$('.dt-buttons').attr("class", "");
+       
         update_amounts();
         $("#datatable1_paginate").addClass("d-print-none");
         $(".dataTables_info").addClass("d-print-none");
+       
+       
 
-    });
-    function update_amounts() {
         
-        $('#datatable1 > tbody  > tr').each(function () {
-            var qty = $(this).find("td").eq(2).html();
-            var price = $(this).find("td").eq(1).html();
-            var amount = parseFloat(qty) * parseFloat(price);
-            amount = isNaN(amount) ? 0 : amount;
-            $(this).find("td").eq(3).html(amount);
-           
-        });
-
-
-    }
-    $.fn.dataTable.Api.register('hasValue()',
-        function (value) {
-            return this
-                .data()
-                .toArray()
-                .toString()
-                .toLowerCase()
-                .split(',')
-                .indexOf(value.toString().toLowerCase()) >
-                -1;
-        });
-    $(document).ready(function () {
-
         var t = $('#datatable1').DataTable({
-            dom: 'Bfrtip',
+            dom:'Bfrtip',
             "pageLength": 20,
             "paging": false,
             "info": false,
+            //buttons:{
+            //    dom:{
+            //        buttton: {
+            //            tag:'button',
+            //            className:''
+            //        }
+            //    }
+            //},
             buttons: [
 
                 {
                     extend: 'print',
                     footer: true,
-                    messageTop: $('#head').html()
+                    title: '',
+                    messageTop: $('.printHead').html(),
+                    messageBottom: $('#pageFooter').html(),
+                    className: 'btn btn-info btn-block mg-b-10 btn-print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    },
+                    init: function (api, node, config) {
+                        $(node).removeClass('dt-button buttons-print');
+                    }
+
                 }
             ],
             "columnDefs": [{
@@ -247,13 +264,16 @@
 
             }
         });
-        var counter = 1;
 
+        
+        
 
-
+        //$(tableTools.fnContainer()).insertAfter('#printPage');
+        t.buttons().container().appendTo('#printPage');
         $('#addRow').on('click', function () {
             if ($.trim($("#txtProduct").val()) == "" || $.trim($("#unitCost").val()) == "" || $.trim($("#quantity").val()) == "") {
                 alert("Please add Item");
+                clearItem();
                 return;
             }
 
@@ -286,15 +306,7 @@
 
         });
 
-        // Automatically add a first row of data
-        //$('#addRow').click();
-        //After Adding an item In The List, Clear Clean The Form For to Add More.
-        function clearItem() {
-            $("#txtProduct").val('');
-            $("#unitCost").val('');
-            $("#quantity").val('');
-            $("#productId").val('');
-        }
+
         // After Add an item In The List, If You Want, You Can Remove It.
         $(document).on('click', 'a.deleteItem', function (e) {
             e.preventDefault();
@@ -308,7 +320,22 @@
             }
         });
 
+
+        $("#printPage>div.dt-buttons").removeClass("dt-buttons");
     });
+   
+    $.fn.dataTable.Api.register('hasValue()',
+        function (value) {
+            return this
+                .data()
+                .toArray()
+                .toString()
+                .toLowerCase()
+                .split(',')
+                .indexOf(value.toString().toLowerCase()) >
+                -1;
+     });
+    
 
     $(function () {
         $("#txtProduct").autocomplete({
@@ -334,6 +361,7 @@
             },
             select: function (e, i) {
                 $("#txtProductId").val(i.item.val);
+                $("#unitCost").val(i.item.cost);
             },
             minLength: 0
         }).focus(function () {
@@ -345,5 +373,24 @@
         print();
     });
 
+    function update_amounts() {
 
+        $('#datatable1 > tbody  > tr').each(function () {
+            var qty = $(this).find("td").eq(2).html();
+            var price = $(this).find("td").eq(1).html();
+            var amount = parseFloat(qty) * parseFloat(price);
+            amount = isNaN(amount) ? 0 : amount;
+            $(this).find("td").eq(3).html(amount);
+
+        });
+
+
+    }
+
+    function clearItem() {
+        $("#txtProduct").val('');
+        $("#unitCost").val('');
+        $("#quantity").val('');
+        $("#productId").val('');
+    }
 </script>
