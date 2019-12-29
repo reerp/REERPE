@@ -42,8 +42,12 @@ namespace REERP.DAL
 
             var categories = new List<Category>
             {
-                new Category { CategoryName="Car",CategoryDescription="Toyota Cars."},
-                new Category {CategoryName="Tyres",CategoryDescription="Tyre for diffrent model Toyota Cars."}
+                 new Category { CategoryName="Brandy",CategoryDescription="Distilled From: Fruit. Primarily grapes, though apple, apricot, cherry, peach, and other fruits"},
+                new Category { CategoryName="Gin",CategoryDescription="Distilled From: Neutral grains such as barley, corn, rye, and wheat. Flavored with a variety of botanicals, which vary by brand"},
+                new Category { CategoryName="Rum",CategoryDescription="Distilled From: Sugar. Either molasses or pure sugar cane"},
+                new Category { CategoryName="Tequila",CategoryDescription="Agave plant"},
+                new Category { CategoryName="Vodka",CategoryDescription="Distilled From: Neutral grain (rye, corn, wheat, etc.) or potato. Some are distilled from beets, grapes, and other bases"},
+                new Category { CategoryName="Whiskey",CategoryDescription="Distilled From: Neutral grain (rye, corn, wheat, etc.) or potato. Some are distilled from beets, grapes, and other bases"}
             };
             categories.ForEach(s => context.Categories.Add(s));
             context.SaveChanges();
@@ -52,16 +56,18 @@ namespace REERP.DAL
 
             var productcs = new List<Productc>
             {
-                new Productc { ProductcId="001", ProductName="Toyota Vitz",ProductDescription="Toyota Vitz 2014", Model="Vitz 2014",UnitOfMeasure="Pcs",UnitCost=200000.00M,UnitPrice=250000.00M,CategoryId=1},
-                new Productc {ProductcId="002",ProductName="Toyota Yaris",ProductDescription="Toyota Yaris 2012", Model="Yaris 2012",UnitOfMeasure="Pcs",UnitCost=350000.00M,UnitPrice=400000.00M,CategoryId=1}
+                new Productc { ProductcId="001", ProductName="Courvoisier - V.S",ProductDescription="750 ml ", Model="",UnitOfMeasure="Pcs",UnitCost=58.00M,UnitPrice=58.00M,CategoryId=1},
+                new Productc { ProductcId="002", ProductName="Courvoisier - V.S.O.P",ProductDescription="750 ml ", Model="",UnitOfMeasure="Pcs",UnitCost=89.00M,UnitPrice=89.00M,CategoryId=1},
+                new Productc { ProductcId="003", ProductName="Courvoisier - X.O. IMPERIAL",ProductDescription="750 ml ", Model="",UnitOfMeasure="Pcs",UnitCost=240.00M,UnitPrice=240.00M,CategoryId=1}
             };
             productcs.ForEach(s => context.Productcs.Add(s));
             context.SaveChanges();
 
             var stocks = new List<Stock>
             {
-                new Stock { BranchId=1,ProductcId="001", Quantity=5},
-                new Stock {BranchId=1,ProductcId="002", Quantity=3}
+                 new Stock { BranchId=1,ProductcId="001", Quantity=100},
+                new Stock {BranchId=1,ProductcId="002", Quantity=100},
+                 new Stock {BranchId=1,ProductcId="003", Quantity=100}
             };
             stocks.ForEach(s => context.Stocks.Add(s));
             context.SaveChanges();
@@ -69,8 +75,9 @@ namespace REERP.DAL
             var receiveInvoice = new ProductReceive { UserId = "98f74499-a614-4373-aacd-5eec5b46ef95", BranchId = 1, DateReceived = DateTime.Parse("2017-12-09") };
             var receiveLineItems = new List<ProductReceiveLineItem>
             {
-                new ProductReceiveLineItem { ProductId="001",Quantity=1, UnitCost=200000.00M},
-                new ProductReceiveLineItem { ProductId="002",Quantity=1, UnitCost=350000.00M}
+                new ProductReceiveLineItem { ProductId="001",Quantity=25, UnitCost=58.00M},
+                new ProductReceiveLineItem { ProductId="002",Quantity=25, UnitCost=89.00M},
+                 new ProductReceiveLineItem { ProductId="003",Quantity=55, UnitCost=240.00M}
             };
 
             receiveInvoice.ProductReceiveLineItems = receiveLineItems;
@@ -80,8 +87,9 @@ namespace REERP.DAL
             var transferInvoice = new ProductTransfer { UserId = "98f74499-a614-4373-aacd-5eec5b46ef95", FromBranchId = 1, ToBranchId = 2, DateTransfered = DateTime.Parse("2017-12-09") };
             var transferLineItems = new List<ProductTransferLineItem>
             {
-                new ProductTransferLineItem { ProductId="001",Quantity=1},
-                new ProductTransferLineItem { ProductId="002",Quantity=1}
+                new ProductTransferLineItem { ProductId="001",Quantity=25},
+                new ProductTransferLineItem { ProductId="002",Quantity=25},
+                new ProductTransferLineItem { ProductId="003",Quantity=25}
             };
 
             transferInvoice.ProductTransferLineItems = transferLineItems;
